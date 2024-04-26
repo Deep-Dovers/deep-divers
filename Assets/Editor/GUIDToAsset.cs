@@ -7,7 +7,7 @@ public class GUIDToAsset : EditorWindow
     string guid;
     Object objToFind = null;
 
-    [MenuItem("Higanbanana/GUIDToAsset")]
+    [MenuItem("Custom Tools/GUIDToAsset")]
     public static void ShowWindow()
     {
         GetWindow<GUIDToAsset>();
