@@ -16,3 +16,5 @@ Please check private discord server's **important_links** channel for most updat
 **Engine** UNITY 2023.2.19f1
 
 ## Set up
+1. Go to Unity Hub/Website and download Unity version 2023.2.19f1
+2. Download the project via Github Desktop (or your choice of git client)
