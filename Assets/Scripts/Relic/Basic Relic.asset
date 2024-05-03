@@ -12,3 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d8024097adc3f34cbb6695a4b53d1cf, type: 3}
   m_Name: Basic Relic
   m_EditorClassIdentifier: 
+  Type: 0
+  DisplayName: 
+  UpgradeLevelAppend: + {num}
+  DefaultDescription: 
+  DefaultIcon: {fileID: 0}
+  DropRate: 0
+  SpawnCondition: 0
+  StatPerLevel:
+  - Level: 0
+    Description: 
+    UpgradedIcon: {fileID: 0}
