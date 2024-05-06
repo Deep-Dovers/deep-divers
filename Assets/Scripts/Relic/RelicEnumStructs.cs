@@ -4,22 +4,32 @@ using UnityEngine.UI;
 
 namespace Relics
 {
+    /// <summary>
+    /// GDD: https://docs.google.com/document/d/19FPeAx0NTitVsxAbg79FQmvzDeT6wDa0VmTIZsrgZPY/
+    /// </summary>
     public enum RelicTypes 
     { 
-        Offense = 0,
-        Status,
-        Defense,
-        Debuff
+        Skill = 0,      //where skill gives players new abilities or modifies basic attacks
+        Support,        //augment/enhance abilities
     }
 
-    [System.Serializable]
-    public struct RelicStatPerLevel
+    public enum RelicSkillTypes
     {
-        public int Level;
-        [Multiline, Tooltip("If left blank will use basic description")]
-        public string Description;
-        public Image UpgradedIcon;
+        Passive = 0,
+        Active = 1,
     }
+
+    public enum RelicRarity
+    {
+                          //In gacha terms...
+        Normal = 0,       //N
+        Rare,             //R
+        SuperRare,        //SR
+        SuperSuperRare,   //SSR
+        Epic,             //UR
+        Legendary         //UUR?
+    }
+
 
     [Flags]
     public enum RelicAvailableIn
@@ -30,5 +40,14 @@ namespace Relics
         Shop = 8,
         Treasure = 16,
         Quests = 32,
+    }
+
+    [System.Serializable]
+    public struct RelicStatPerLevel
+    {
+        public int Level;
+        [Multiline, Tooltip("If left blank will use basic description")]
+        public string Description;
+        public Image UpgradedIcon;
     }
 }
