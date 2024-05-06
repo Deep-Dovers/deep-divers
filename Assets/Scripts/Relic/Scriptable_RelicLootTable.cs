@@ -4,10 +4,13 @@ using UnityEngine;
 namespace Relics
 {
     [CreateAssetMenu(fileName = "AvailableRelicList",
-    menuName = "Scriptable Objects/AvailableRelicList Data", order = 1)]
-    public class Scriptable_AvailableRelicList : ScriptableObject
+    menuName = "Scriptable Objects/Relic/Basic Relic Loot Table Data", order = 1)]
+    public class Scriptable_RelicLootTable : ScriptableObject
     {
-        public List<Scriptable_RelicBase> LootTable = new();
+        public GameObject LootDisplayPrefab;
+
+        [Header("List")]
+        public List<RelicLootTableEntry> LootTable = new();
 
         /// <summary>
         /// Get relic based on spawn rate

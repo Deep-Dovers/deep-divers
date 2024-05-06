@@ -11,7 +11,7 @@ namespace Relics
         public List<Scriptable_RelicBase> AvailableRelics => m_spawnedRelics;
 
         [SerializeField]
-        private Scriptable_AvailableRelicList RelicLootTable;
+        private Scriptable_RelicLootTable RelicLootTable;
 
         private void OnValidate()
         {
@@ -28,7 +28,7 @@ namespace Relics
 
         }
 
-        public void HotSwapRelicList(Scriptable_AvailableRelicList list)
+        public void HotSwapRelicList(Scriptable_RelicLootTable list)
         {
             if(list != RelicLootTable)
             {

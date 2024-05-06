@@ -50,4 +50,19 @@ namespace Relics
         public string Description;
         public Image UpgradedIcon;
     }
+
+    [System.Serializable]
+    public struct RelicSpawn
+    {
+        [Range(0f, 100f), Tooltip("0 to 100%")]
+        public float DropRate;
+        public RelicAvailableIn SpawnCondition;
+    }
+
+    [System.Serializable]
+    public struct RelicLootTableEntry
+    {
+        public Scriptable_RelicBase Relic;
+        public RelicSpawn SpawnSettings;
+    }
 }

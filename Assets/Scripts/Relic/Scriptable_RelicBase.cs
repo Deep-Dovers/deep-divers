@@ -31,9 +31,7 @@ namespace Relics
         public Image DefaultIcon;
 
         [Header("Spawn")]
-        [Range(0f, 100f), Tooltip("0 to 100%")]
-        public float DropRate = 10f;
-        public RelicAvailableIn SpawnCondition = RelicAvailableIn.BattleLoot;
+        public RelicSpawn SpawnSettings;
 
         [Header("Stats (Per Level)")]
         public List<RelicStatPerLevel> StatPerLevel = new();
@@ -49,7 +47,7 @@ namespace Relics
         /// <returns>Drop rate between 0f-1f</returns>
         public float GetNormalizedDropRate()
         {
-            return DropRate / 100f;
+            return SpawnSettings.DropRate / 100f;
         }
     }
 }
