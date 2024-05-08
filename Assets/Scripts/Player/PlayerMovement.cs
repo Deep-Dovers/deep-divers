@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //! seem to be the most common suggested wayt o move a top down player movement
         m_rb.MovePositionAndRotation(m_rb.position + m_movement * MoveSpeed * Time.fixedDeltaTime, m_RotationAngle);
-        m_rb.rotation = m_RotationAngle
+        m_rb.rotation = m_RotationAngle;
     }
 
     private void OnMove(InputValue value)
