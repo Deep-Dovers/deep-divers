@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaa83188c65d2e447a2924d60472bd29, type: 3}
+  m_Name: PenetrationRelic
+  m_EditorClassIdentifier: 
+  Type: 1
+  SkillSubType: 0
+  Ability: {fileID: 0}
+  AttackBoost: {fileID: 0}
+  BaseRarity: 0
+  DisplayName: Penetration
+  DefaultDescription: Projectiles will penetrate {num} additional enemy.
+  DefaultIcon: {fileID: 21300000, guid: 017dea4352078564a9414e335d0d3af7, type: 3}
+  SpawnSettings:
+    DropRate: 25
+    SpawnCondition: 2
+  StatPerLevel:
+  - Rarity: 0
+    Description: Projectiles will penetrate 1 additional enemy.
+    UpgradedIcon: {fileID: 0}
+  - Rarity: 1
+    Description: Projectiles will penetrate 2 additional enemies.
+    UpgradedIcon: {fileID: 0}
+  - Rarity: 4
+    Description: Projectiles will penetrate 3 additional enemies.
+    UpgradedIcon: {fileID: 0}
+  - Rarity: 5
+    Description: Projectiles will penetrate all enemies.
+    UpgradedIcon: {fileID: 0}
