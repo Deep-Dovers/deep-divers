@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      RoundedSquare_25px_0: 2144059764161124631
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Relics
 {
     [CreateAssetMenu(fileName = "AvailableRelicList",
-    menuName = "Scriptable Objects/Relic/Basic Relic Loot Table Data", order = 1)]
+    menuName = "Scriptable Objects/Relic/Basic Relic Loot Table Data", order = 100)]
     public class Scriptable_RelicLootTable : ScriptableObject
     {
         public GameObject LootDisplayPrefab;

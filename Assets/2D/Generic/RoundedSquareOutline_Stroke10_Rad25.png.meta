@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      RoundedSquareOutline_Stroke10_Rad25_0: 7598470171516354097
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

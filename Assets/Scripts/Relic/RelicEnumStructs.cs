@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,8 +10,8 @@ namespace Relics
     /// </summary>
     public enum RelicTypes 
     { 
-        Skill = 0,      //where skill gives players new abilities or modifies basic attacks
-        Support,        //augment/enhance abilities
+        Active = 0,      //where skill gives players new abilities or modifies basic attacks
+        Passive,        //augment/enhance abilities
     }
 
     public enum RelicSkillTypes
@@ -42,13 +43,15 @@ namespace Relics
         Quests = 32,
     }
 
+
     [System.Serializable]
-    public struct RelicStatPerLevel
+    public struct RelicStatPerRarity
     {
-        public int Level;
-        [Multiline, Tooltip("If left blank will use basic description")]
+        public RelicRarity Rarity;
+        [ResizableTextArea, Tooltip("If left blank will use basic description")]
         public string Description;
-        public Image UpgradedIcon;
+        [HideInInspector]
+        public Sprite UpgradedIcon;
     }
 
     [System.Serializable]
