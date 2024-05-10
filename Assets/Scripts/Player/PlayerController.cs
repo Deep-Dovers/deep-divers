@@ -20,8 +20,9 @@ public class PlayerController : MonoBehaviour
     private string m_uId = string.Empty;
     public string UniqueId => m_uId;
 
+    //! so i can test movement
     [Header("Character")]
-    [SerializeField, ReadOnly]
+    [SerializeField]
     private PlayerCharacter m_character;
 
     //event system/input

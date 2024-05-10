@@ -49,7 +49,6 @@ public class PlayerMovement : MonoBehaviour
     private void OnJumpInput(bool isJumpPressed = true)
     {
         Debug.Log("Jump");
-
         Jump();
     }
 }
