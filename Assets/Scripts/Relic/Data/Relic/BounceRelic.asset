@@ -16,11 +16,17 @@ MonoBehaviour:
   SkillSubType: 0
   Ability: {fileID: 0}
   AttackBoost: {fileID: 0}
-  BaseRarity: 0
-  DisplayName: 
-  DefaultDescription: Lorem ipsum dolor hodor
-  DefaultIcon: {fileID: 0}
-  SpawnSettings:
-    DropRate: 0
-    SpawnCondition: 0
-  StatPerLevel: []
+  BaseRarity: 1
+  DisplayName: Bounce
+  DefaultDescription: Projectiles bounce when hitting a surface once.
+  DefaultIcon: {fileID: 21300000, guid: b3c3e43976f9aea4ca6d5b612e68e1d6, type: 3}
+  StatPerLevel:
+  - Rarity: 1
+    Description: Projectiles bounce when hitting a surface once.
+    UpgradedIcon: {fileID: 0}
+  - Rarity: 4
+    Description: Projectiles bounce when hitting a surface twice.
+    UpgradedIcon: {fileID: 0}
+  - Rarity: 5
+    Description: Projectiles bounce when hitting a surface thrice.
+    UpgradedIcon: {fileID: 0}
