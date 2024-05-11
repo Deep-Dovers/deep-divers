@@ -14,7 +14,7 @@ public class PlayerCharacter : MonoBehaviour
     private bool m_isGrounded;
     private int m_jumpCount = 0;
     private float jumpTime = 0.35f;
-    private float jumpTimeCounter = 0;
+    private float m_coyoteTimeCounter;
     private float lastGroundedTime = 0f;
     private float lastjumpTime = 0f;
     private bool m_isJumping = false;
@@ -49,6 +49,8 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField]
     float m_maxFallSpeed = 50f;
     [SerializeField]
+    float m_m_coyoteTime = 0.3f;
+    [SerializeField]
     private float m_gravityDefault = 2f;
     [SerializeField]
     private float m_FallingGravity = 3f;
@@ -65,7 +67,7 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField]
     float DashSpeed;
     [SerializeField]
-    float AirControlsStrength;
+    float AirControlsStrength;      //! feels redundent 
     [SerializeField]
     float Gravity;
     [SerializeField]
@@ -84,6 +86,8 @@ public class PlayerCharacter : MonoBehaviour
     void Start()
     {
         m_rb = GetComponent<Rigidbody2D>();
+        m_rb.gravityScale = m_gravityDefault;
+        m_coyoteTimeCounter = m_m_coyoteTime;
     }
 
     // Update is called once per frame
@@ -97,7 +101,7 @@ public class PlayerCharacter : MonoBehaviour
 
         //! Implemeted some tips from this video here https://www.youtube.com/watch?v=2S3g8CgBG1g to make the jump feel better
         #region Jump
-        if (m_rb.velocityY < 0)
+        if (m_rb.velocityY < -1)
         {
             m_rb.gravityScale = m_FallingGravity;
         }
@@ -115,24 +119,28 @@ public class PlayerCharacter : MonoBehaviour
             //! reset jump values
             m_isGrounded = true;
             m_isJumping = false;
-            m_jumpCount = 0;
-            m_rb.gravityScale = m_gravityDefault;
+            m_jumpCount = 0;                         //! Reset jump count
+            m_rb.gravityScale = m_gravityDefault;    //! Set the gravity back to default player gravity scale
+            m_coyoteTimeCounter = m_m_coyoteTime;    //! Reset coyote time
         }
         else
         {
             m_isGrounded = false;
+            m_coyoteTimeCounter -= Time.deltaTime;   //! Tick down coyoteTime if not grounded
         }
          
     }
     private void OnDrawGizmos()
     {
+        //! Draws the ground check box cast so can adjust in editor.
         Gizmos.DrawWireCube(transform.position - transform.up * castDistance, boxSize);
     }
 
     private void Jump()
     {
         Debug.Log("Jumping");
-        m_rb.AddForce(Vector2.up * m_jumpForce, ForceMode2D.Impulse);
+        //m_rb.AddForce(Vector2.up * m_jumpForce, ForceMode2D.Impulse);
+        m_rb.velocityY = m_jumpForce;
         m_jumpCount++;
         lastGroundedTime = 0;
         lastjumpTime = 0f;
@@ -198,7 +206,7 @@ public class PlayerCharacter : MonoBehaviour
     //! listen for input
     public void OnJumpInput(bool isJumpPressed = true)
     { 
-        if(m_isGrounded || m_jumpCount < m_maxJumpCount)
+        if(m_isGrounded || m_jumpCount < m_maxJumpCount || m_coyoteTimeCounter > 0)
         {
             Jump();
         }   
