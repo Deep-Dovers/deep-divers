@@ -133,6 +133,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         Debug.Log("Jumping");
         m_rb.AddForce(Vector2.up * m_jumpForce, ForceMode2D.Impulse);
+        m_jumpCount++;
         lastGroundedTime = 0;
         lastjumpTime = 0f;
         m_isJumping = true;

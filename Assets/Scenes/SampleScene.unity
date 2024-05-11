@@ -425,27 +425,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Owner>k__BackingField: {fileID: 0}
   m_linearDrag: 1
-  jumpTime: 0.35
-  jumpTimeCounter: 0
-  lastGroundedTime: 0
-  lastjumpTime: 0
-  isJumping: 0
-  jumpInputReleased: 0
-  boxSize: {x: 0.5, y: 0.5}
-  castDistance: 1
-  GroundLayer:
-    serializedVersion: 2
-    m_Bits: 64
   m_maxMoveSpeed: 10
   m_acceleration: 5
   m_decceleration: 5
   m_velPow: 0.9
+  m_frictionValue: 0.2
   RunningMaxSpeed: 0
   m_jumpForce: 7
   JumpForceInitial: 0
   JumpForceHoldIncrement: 0
-  MaxJumpCount: 0
-  JumpCooldown: 0
+  m_maxJumpCount: 1
+  m_jumpCooldown: 0
+  m_maxFallSpeed: 100
+  boxSize: {x: 0.6, y: 0.1}
+  castDistance: 1
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   DashSpeed: 0
   AirControlsStrength: 0
   Gravity: 0
