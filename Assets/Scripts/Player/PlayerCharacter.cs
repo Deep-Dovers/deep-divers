@@ -1,20 +1,16 @@
 using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class PlayerCharacter : MonoBehaviour
 {
     [field: SerializeField, ReadOnly]
     public PlayerController Owner { get; private set; }
 
-    [SerializeField]
-    private float m_linearDrag = 1f;
-
-    //! private fields
+    //! private fields / Debugging Values
     private Rigidbody2D m_rb;
     private Vector2 m_movement;
-    private bool isFaceingRight;
+    private Vector2 m_currentVelocity;
+    private bool m_isFaceingRight = true;
     private bool m_isGrounded;
     private int m_jumpCount = 0;
     private float jumpTime = 0.35f;
@@ -23,8 +19,7 @@ public class PlayerCharacter : MonoBehaviour
     private float lastjumpTime = 0f;
     private bool m_isJumping = false;
     private bool jumpInputReleased = false;
- 
-
+    
     [Header ("Movement Variable")]
     [SerializeField, Tooltip("The max Horizontal move speed for the player")]
     private float m_maxMoveSpeed = 10f;  // Player Max Speed Horizontal
@@ -37,22 +32,26 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField, Range(0, 1)]
     private float m_frictionValue = 0.2f;
     [SerializeField]
-    float RunningMaxSpeed;
+    float RunningMaxSpeed;         //! is running a state like the player can sprint like in COD?
 
     [Space]
     [Header("Jump Variable")]
     [SerializeField]
     float m_jumpForce = 5f;
     [SerializeField]
-    float JumpForceInitial;
+    float JumpForceInitial;        //! Need a convo with designers
     [SerializeField]
-    float JumpForceHoldIncrement;
+    float JumpForceHoldIncrement;  //! Need a convo with designers
     [SerializeField]
     int m_maxJumpCount = 1;
     [SerializeField]
-    float m_jumpCooldown;
+    float m_jumpCooldown;          //! feels redundent 
     [SerializeField]
-    float m_maxFallSpeed = 100f;
+    float m_maxFallSpeed = 50f;
+    [SerializeField]
+    private float m_gravityDefault = 2f;
+    [SerializeField]
+    private float m_FallingGravity = 3f;
     [Header("Is ground check values")]
     [SerializeField]
     private Vector2 boxSize;
@@ -70,7 +69,7 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField]
     float Gravity;
     [SerializeField]
-    float SlowFallSpeed;
+    float SlowFallSpeed;            //! Need a convo with designers
     [SerializeField]
     int MaxDashCount;
     [SerializeField]
@@ -90,6 +89,7 @@ public class PlayerCharacter : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        m_currentVelocity = m_rb.velocity;
         //! seem to be the most common suggested wayt o move a top down player movement
         ApplyMovement();
         ApplyFriction();
@@ -99,7 +99,7 @@ public class PlayerCharacter : MonoBehaviour
         #region Jump
         if (m_rb.velocityY < 0)
         {
-            m_rb.gravityScale = 3f;
+            m_rb.gravityScale = m_FallingGravity;
         }
         //! Cap the falling speed
         if(Mathf.Abs(m_rb.velocityY) >= m_maxFallSpeed)
@@ -116,7 +116,7 @@ public class PlayerCharacter : MonoBehaviour
             m_isGrounded = true;
             m_isJumping = false;
             m_jumpCount = 0;
-            m_rb.gravityScale = 2f;
+            m_rb.gravityScale = m_gravityDefault;
         }
         else
         {
@@ -156,6 +156,24 @@ public class PlayerCharacter : MonoBehaviour
        
         //! Apply accleration
         m_rb.AddForceX(movement);
+
+        //! Make sure to flip the player if there is a change in direction
+        if(m_movement.x > 0 && !m_isFaceingRight)
+        {
+            Flip();
+        }
+        if (m_movement.x < 0 && m_isFaceingRight)
+        {
+            Flip();
+        }
+    }
+    private void Flip()
+    {
+        //! Invert the x scale to flip the player charcter
+        Vector3 curScale = gameObject.transform.localScale;
+        curScale.x *= -1;
+        gameObject.transform.localScale = curScale;
+        m_isFaceingRight = !m_isFaceingRight;
     }
 
     private void Dash()
