@@ -13,7 +13,7 @@ public class PlayerCharacter : MonoBehaviour
     private bool m_isFaceingRight = true;
     private bool m_isGrounded;
     private int m_jumpCount = 0;
-    private float jumpTime = 0.35f;
+    private float m_jumpCDTimer;
     private float m_coyoteTimeCounter;
     private float lastGroundedTime = 0f;
     private float lastjumpTime = 0f;
@@ -45,16 +45,16 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField]
     int m_maxJumpCount = 1;
     [SerializeField]
-    float m_jumpCooldown;          //! feels redundent 
+    float m_jumpCooldown = 0.5f;          
     [SerializeField]
     float m_maxFallSpeed = 50f;
     [SerializeField]
-    float m_m_coyoteTime = 0.3f;
+    float m_coyoteTime = 0.3f;
     [SerializeField]
     private float m_gravityDefault = 2f;
     [SerializeField]
-    private float m_FallingGravity = 3f;
-    [Header("Is ground check values")]
+    private float m_fallingGravity = 3f;
+    [Header("Ground check values")]
     [SerializeField]
     private Vector2 boxSize;
     [SerializeField]
@@ -87,7 +87,8 @@ public class PlayerCharacter : MonoBehaviour
     {
         m_rb = GetComponent<Rigidbody2D>();
         m_rb.gravityScale = m_gravityDefault;
-        m_coyoteTimeCounter = m_m_coyoteTime;
+        m_coyoteTimeCounter = m_fallingGravity;
+        m_jumpCDTimer = m_jumpCooldown;
     }
 
     // Update is called once per frame
@@ -103,25 +104,34 @@ public class PlayerCharacter : MonoBehaviour
         #region Jump
         if (m_rb.velocityY < -1)
         {
-            m_rb.gravityScale = m_FallingGravity;
+            m_rb.gravityScale = m_fallingGravity;
         }
         //! Cap the falling speed
         if(Mathf.Abs(m_rb.velocityY) >= m_maxFallSpeed)
         {
             m_rb.velocityY = Mathf.Sign(m_rb.velocityY) * m_maxFallSpeed;
         }
+        //! this is to make sure the ground check does not stright away return true when jumping
+        if(m_isJumping)
+        {
+            m_jumpCDTimer -= Time.deltaTime;
+            if(m_jumpCDTimer <= 0)
+            {
+                m_isJumping = false;
+                m_jumpCDTimer = m_jumpCooldown;
+            }
+        }
         #endregion
     }
     private void CheckGrounded()
     {
-        if(Physics2D.BoxCast(transform.position, boxSize, 0 , -transform.up, castDistance, GroundLayer))
+        if(Physics2D.BoxCast(transform.position, boxSize, 0 , -transform.up, castDistance, GroundLayer) && !m_isJumping)
         {
             //! reset jump values
             m_isGrounded = true;
-            m_isJumping = false;
             m_jumpCount = 0;                         //! Reset jump count
             m_rb.gravityScale = m_gravityDefault;    //! Set the gravity back to default player gravity scale
-            m_coyoteTimeCounter = m_m_coyoteTime;    //! Reset coyote time
+            m_coyoteTimeCounter = m_coyoteTime;    //! Reset coyote time
         }
         else
         {
@@ -140,7 +150,7 @@ public class PlayerCharacter : MonoBehaviour
     {
         Debug.Log("Jumping");
         //m_rb.AddForce(Vector2.up * m_jumpForce, ForceMode2D.Impulse);
-        m_rb.velocityY = m_jumpForce;
+        m_rb.velocityY = m_jumpForce;  //! setting the velocity seems to feel better should show desinger both implementation
         m_jumpCount++;
         lastGroundedTime = 0;
         lastjumpTime = 0f;
@@ -206,7 +216,7 @@ public class PlayerCharacter : MonoBehaviour
     //! listen for input
     public void OnJumpInput(bool isJumpPressed = true)
     { 
-        if(m_isGrounded || m_jumpCount < m_maxJumpCount || m_coyoteTimeCounter > 0)
+        if( !m_isJumping && ( m_isGrounded || m_jumpCount < m_maxJumpCount || m_coyoteTimeCounter > 0))
         {
             Jump();
         }   
