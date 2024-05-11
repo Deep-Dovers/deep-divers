@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class PlayerCharacter : MonoBehaviour
 {
@@ -10,20 +11,19 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField]
     private float m_linearDrag = 1f;
 
+    //! private fields
     private Rigidbody2D m_rb;
     private Vector2 m_movement;
     private bool isFaceingRight;
     private bool m_isGrounded;
-
-    public float jumpTime = 0.35f;
-    public float jumpTimeCounter = 0;
-    public float lastGroundedTime = 0f;
-    public float lastjumpTime = 0f;
-    public bool isJumping = false;
-    public bool jumpInputReleased = false;
-    public Vector2 boxSize;
-    public float castDistance;
-    public LayerMask GroundLayer;
+    private int m_jumpCount = 0;
+    private float jumpTime = 0.35f;
+    private float jumpTimeCounter = 0;
+    private float lastGroundedTime = 0f;
+    private float lastjumpTime = 0f;
+    private bool m_isJumping = false;
+    private bool jumpInputReleased = false;
+ 
 
     [Header ("Movement Variable")]
     [SerializeField, Tooltip("The max Horizontal move speed for the player")]
@@ -34,6 +34,8 @@ public class PlayerCharacter : MonoBehaviour
     private float m_decceleration = 5f;  // Player Slow Down Speed
     [SerializeField, Range(0,1), Tooltip("this value is used to make the player feel more snappy when turning, the lower the number the less snappy")]
     private float m_velPow = 0.9f;
+    [SerializeField, Range(0, 1)]
+    private float m_frictionValue = 0.2f;
     [SerializeField]
     float RunningMaxSpeed;
 
@@ -46,13 +48,21 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField]
     float JumpForceHoldIncrement;
     [SerializeField]
-    int MaxJumpCount;
+    int m_maxJumpCount = 1;
     [SerializeField]
-    float JumpCooldown;
+    float m_jumpCooldown;
+    [SerializeField]
+    float m_maxFallSpeed = 100f;
+    [Header("Is ground check values")]
+    [SerializeField]
+    private Vector2 boxSize;
+    [SerializeField]
+    private float castDistance;
+    [SerializeField]
+    private LayerMask GroundLayer;
 
     [Space]
     [Header("Not yet done")]
-  
     [SerializeField]
     float DashSpeed;
     [SerializeField]
@@ -85,19 +95,28 @@ public class PlayerCharacter : MonoBehaviour
         ApplyFriction();
         CheckGrounded();
 
-        //! implemeted some tips from this video here https://www.youtube.com/watch?v=2S3g8CgBG1g to make the jump feel better
+        //! Implemeted some tips from this video here https://www.youtube.com/watch?v=2S3g8CgBG1g to make the jump feel better
         #region Jump
         if (m_rb.velocityY < 0)
-            m_rb.gravityScale = 3f; 
+        {
+            m_rb.gravityScale = 3f;
+        }
+        //! Cap the falling speed
+        if(Mathf.Abs(m_rb.velocityY) >= m_maxFallSpeed)
+        {
+            m_rb.velocityY = Mathf.Sign(m_rb.velocityY) * m_maxFallSpeed;
+        }
         #endregion
     }
     private void CheckGrounded()
     {
-        
         if(Physics2D.BoxCast(transform.position, boxSize, 0 , -transform.up, castDistance, GroundLayer))
         {
+            //! reset jump values
             m_isGrounded = true;
-            m_rb.gravityScale = 1f;
+            m_isJumping = false;
+            m_jumpCount = 0;
+            m_rb.gravityScale = 2f;
         }
         else
         {
@@ -112,10 +131,11 @@ public class PlayerCharacter : MonoBehaviour
 
     private void Jump()
     {
+        Debug.Log("Jumping");
         m_rb.AddForce(Vector2.up * m_jumpForce, ForceMode2D.Impulse);
         lastGroundedTime = 0;
         lastjumpTime = 0f;
-        isJumping = true;
+        m_isJumping = true;
         jumpInputReleased = false;
     }
     private void ApplyMovement()
@@ -137,21 +157,33 @@ public class PlayerCharacter : MonoBehaviour
         m_rb.AddForceX(movement);
     }
 
-    private void ApplyFriction()
+    private void Dash()
     {
 
+    }
+
+    private void ApplyFriction()
+    {
+        //! Make sure we are grounded and there is currently forward or back is not being pressed
+        if(m_isGrounded && Mathf.Abs(m_movement.x) < 0.01)
+        {
+            //! See which is smaller currently my velocity or the friction value
+            float frictionVal = Mathf.Min(Mathf.Abs(m_rb.velocityX), Mathf.Abs(m_frictionValue));
+            //! Add back the direction
+            frictionVal *= Mathf.Sign(m_rb.velocityX);
+            //! Apply the friction against my current movement direction
+            m_rb.AddForceX(-frictionVal, ForceMode2D.Impulse);
+        }
     }
 
     //! listen for input
     public void OnJumpInput(bool isJumpPressed = true)
-    {
-        Debug.Log("Jump");
-        if(m_isGrounded)
+    { 
+        if(m_isGrounded || m_jumpCount < m_maxJumpCount)
         {
             Jump();
         }   
     }
-
     public void OnAttackInput(bool isAttackPressed = true)
     {
         print("I am attacking");
@@ -162,7 +194,11 @@ public class PlayerCharacter : MonoBehaviour
         Debug.Log("moving" + value);
         m_movement = value;
     }
-
+    public void OnDashInput(bool isDashPressed = true)
+    {
+        Debug.Log("Dash input received");
+        Dash();
+    }
     public void SetOwner(PlayerController owner)
     {
         print("My new owner is player index " + owner.PlayerIndex);

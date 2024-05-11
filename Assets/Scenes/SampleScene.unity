@@ -354,11 +354,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2993375408568418178, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.0276928
+      value: -1.975
       objectReference: {fileID: 0}
     - target: {fileID: 2993375408568418178, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.7012525
+      value: -0.591
       objectReference: {fileID: 0}
     - target: {fileID: 2993375408568418178, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -427,10 +427,19 @@ MonoBehaviour:
   m_linearDrag: 1
   jumpTime: 0.35
   jumpTimeCounter: 0
+  lastGroundedTime: 0
+  lastjumpTime: 0
+  isJumping: 0
+  jumpInputReleased: 0
+  boxSize: {x: 0.5, y: 0.5}
+  castDistance: 1
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 64
   m_maxMoveSpeed: 10
-  m_acceleration: 50
-  m_LinearDrag: 10
-  RunningStartSpeed: 0
+  m_acceleration: 5
+  m_decceleration: 5
+  m_velPow: 0.9
   RunningMaxSpeed: 0
   m_jumpForce: 7
   JumpForceInitial: 0
@@ -438,6 +447,7 @@ MonoBehaviour:
   MaxJumpCount: 0
   JumpCooldown: 0
   DashSpeed: 0
+  AirControlsStrength: 0
   Gravity: 0
   SlowFallSpeed: 0
   MaxDashCount: 0
@@ -787,7 +797,7 @@ GameObject:
   - component: {fileID: 1686369775}
   - component: {fileID: 1686369774}
   - component: {fileID: 1686369773}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
