@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -7906693199331426697}
   - component: {fileID: -4967147638438208130}
   - component: {fileID: 7492358621380129424}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerCharacter
   m_TagString: Untagged
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
@@ -54,7 +54,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 1
   m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2429908440
+  GlobalObjectIdHash: 1691153687
   InScenePlacedSourceGlobalObjectIdHash: 3681941828
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
