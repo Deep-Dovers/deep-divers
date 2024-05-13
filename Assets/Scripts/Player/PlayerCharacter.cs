@@ -120,6 +120,12 @@ public class PlayerCharacter : NetworkBehaviour
         if (m_isDashing)
         {
             m_dashCDTimer -= Time.deltaTime;
+            if(m_dashCDTimer <= 0)
+            {
+                m_isDashing = false;
+                m_dashCount = 0;
+                m_canDash = true;
+            }
         }
         #endregion
     }
@@ -235,7 +241,12 @@ public class PlayerCharacter : NetworkBehaviour
                 m_rb.velocityX = -m_dashSpeed;
             }
             m_isDashing = true;
+            m_dashCDTimer = m_dashCooldown;
             m_dashCount++;
+            if(m_dashCount >= m_maxDashCount)
+            {
+                m_canDash = false;
+            }
         }
     }
 
