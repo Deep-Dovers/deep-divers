@@ -515,11 +515,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2993375408568418178, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.975
+      value: -3.46
       objectReference: {fileID: 0}
     - target: {fileID: 2993375408568418178, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.42
+      value: -1.71
       objectReference: {fileID: 0}
     - target: {fileID: 2993375408568418178, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -562,6 +562,9 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 127594197053848125, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 966302761}
+    - targetCorrespondingSourceObject: {fileID: 127594197053848125, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 966302753}
     - targetCorrespondingSourceObject: {fileID: 127594197053848125, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
       insertIndex: -1
@@ -588,15 +591,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Owner>k__BackingField: {fileID: 0}
+  m_maxHorizontalVelocity: 50
   m_maxMoveSpeed: 10
   m_acceleration: 5
   m_decceleration: 5
   m_velPow: 0.9
   m_frictionValue: 0.2
-  RunningMaxSpeed: 0
   m_jumpForce: 10
-  JumpForceInitial: 0
-  JumpForceHoldIncrement: 0
   m_maxJumpCount: 1
   m_jumpCooldown: 0.5
   m_maxFallSpeed: 30
@@ -608,12 +609,11 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 64
-  DashSpeed: 0
+  m_dashSpeed: 30
+  m_maxDashCount: 0
+  m_dashCooldown: 0
   AirControlsStrength: 0
-  Gravity: 0
   SlowFallSpeed: 0
-  MaxDashCount: 0
-  DashCooldown: 0
   Role: 
   Race: 
 --- !u!70 &966302757
@@ -685,6 +685,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2993375408568418178, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
   m_PrefabInstance: {fileID: 966302751}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &966302761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966302752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2177851191
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1001 &1050400384
 PrefabInstance:
   m_ObjectHideFlags: 0

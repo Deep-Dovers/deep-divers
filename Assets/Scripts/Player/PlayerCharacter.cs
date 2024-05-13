@@ -1,48 +1,41 @@
 using NaughtyAttributes;
 using UnityEngine;
+using Unity.Netcode;
 
-public class PlayerCharacter : MonoBehaviour
+public class PlayerCharacter : NetworkBehaviour
 {
     [field: SerializeField, ReadOnly]
     public PlayerController Owner { get; private set; }
 
     //! private fields / Debugging Values
     private Rigidbody2D m_rb;
-    private Vector2 m_movement;
-    private Vector2 m_currentVelocity;
     private bool m_isFaceingRight = true;
-    private bool m_isGrounded;
-    private int m_jumpCount = 0;
-    private float m_jumpCDTimer;
-    private float m_coyoteTimeCounter;
-    private float lastGroundedTime = 0f;
-    private float lastjumpTime = 0f;
-    private bool m_isJumping = false;
-    private bool jumpInputReleased = false;
-    
+
+    #region Movement variable
     [Header ("Movement Variable")]
-    [SerializeField, Tooltip("The max Horizontal move speed for the player")]
+    [SerializeField, Tooltip("Fastest possible speed the player can move at")]
+    private float m_maxHorizontalVelocity;
+    [SerializeField, Tooltip("The max movement speed")]
     private float m_maxMoveSpeed = 10f;  // Player Max Speed Horizontal
     [SerializeField, Tooltip("If accleration is bigger then max speed he player will immedietly hit max velocity")]
     private float m_acceleration = 5;    // Player Running Start Speed
-    [SerializeField, Tooltip("the decceleration rate of the player")]
+    [SerializeField, Tooltip("The decceleration rate of the player")]
     private float m_decceleration = 5f;  // Player Slow Down Speed
-    [SerializeField, Range(0,1), Tooltip("this value is used to make the player feel more snappy when turning, the lower the number the less snappy")]
+    [SerializeField, Range(0,1), Tooltip("This value is used to make the player feel more snappy when turning, the lower the number the less snappy")]
     private float m_velPow = 0.9f;
-    [SerializeField, Range(0, 1)]
-    private float m_frictionValue = 0.2f;
-    [SerializeField]
-    float RunningMaxSpeed;         //! is running a state like the player can sprint like in COD?
+    [SerializeField, Range(0, 1), Tooltip("Increase the value if u want the player to not slide so much when stopping")]
+    private float m_frictionValue = 0.2f;      
 
+    private Vector2 m_movement;
+    private Vector2 m_currentVelocity;   //! for debugging 
+    #endregion
+
+    #region Jump variable
     [Space]
     [Header("Jump Variable")]
-    [SerializeField]
+    [SerializeField, Tooltip("The force that is applied to a rigidbody when jumping")]
     float m_jumpForce = 5f;
-    [SerializeField]
-    float JumpForceInitial;        //! Need a convo with designers
-    [SerializeField]
-    float JumpForceHoldIncrement;  //! Need a convo with designers
-    [SerializeField]
+    [SerializeField, Tooltip("The number of time the player can jump before it has to be grounded")]
     int m_maxJumpCount = 1;
     [SerializeField]
     float m_jumpCooldown = 0.5f;          
@@ -61,21 +54,40 @@ public class PlayerCharacter : MonoBehaviour
     private float castDistance;
     [SerializeField]
     private LayerMask GroundLayer;
+    
+    private bool m_isGrounded;
+    private int m_jumpCount = 0;
+    private float m_jumpCDTimer;
+    private float m_coyoteTimeCounter;
+    private float lastGroundedTime = 0f;
+    private float m_jumpTime = 0f;
+    private bool m_isJumping = false;
+    private bool jumpInputReleased = false;
+    #endregion
+
+    #region Dash variable
+    [Space]
+    [Header("Dash Variable")]
+    [SerializeField]
+    private float m_dashSpeed;
+    [SerializeField]
+    private int m_maxDashCount;
+    [SerializeField] 
+    private float m_dashCooldown;
+
+    private int m_dashCount;
+    private float m_dashCDTimer;
+    private bool m_isDashing = false;
+    private bool m_canDash = true;
+    private Vector2 m_dashDirection = Vector2.zero;
+    #endregion
 
     [Space]
     [Header("Not yet done")]
     [SerializeField]
-    float DashSpeed;
-    [SerializeField]
     float AirControlsStrength;      //! feels redundent 
     [SerializeField]
-    float Gravity;
-    [SerializeField]
     float SlowFallSpeed;            //! Need a convo with designers
-    [SerializeField]
-    int MaxDashCount;
-    [SerializeField]
-    float DashCooldown;
     [SerializeField]
     string Role;
     [SerializeField]
@@ -89,9 +101,29 @@ public class PlayerCharacter : MonoBehaviour
         m_rb.gravityScale = m_gravityDefault;
         m_coyoteTimeCounter = m_fallingGravity;
         m_jumpCDTimer = m_jumpCooldown;
+        m_dashCDTimer = m_dashCooldown;
     }
+    private void Update()
+    {
+        //! this is to make sure the ground check does not stright away return true when jumping
+        if (m_isJumping)
+        {
+            m_jumpCDTimer -= Time.deltaTime;
+            if (m_jumpCDTimer <= 0)
+            {
+                m_isJumping = false;
+                m_jumpCDTimer = m_jumpCooldown;
+            }
+        }
 
-    // Update is called once per frame
+        #region Dash
+        if (m_isDashing)
+        {
+            m_dashCDTimer -= Time.deltaTime;
+        }
+        #endregion
+    }
+    // Anything that relates to physics is done here
     void FixedUpdate()
     {
         m_currentVelocity = m_rb.velocity;
@@ -111,16 +143,6 @@ public class PlayerCharacter : MonoBehaviour
         {
             m_rb.velocityY = Mathf.Sign(m_rb.velocityY) * m_maxFallSpeed;
         }
-        //! this is to make sure the ground check does not stright away return true when jumping
-        if(m_isJumping)
-        {
-            m_jumpCDTimer -= Time.deltaTime;
-            if(m_jumpCDTimer <= 0)
-            {
-                m_isJumping = false;
-                m_jumpCDTimer = m_jumpCooldown;
-            }
-        }
         #endregion
     }
     private void CheckGrounded()
@@ -131,7 +153,7 @@ public class PlayerCharacter : MonoBehaviour
             m_isGrounded = true;
             m_jumpCount = 0;                         //! Reset jump count
             m_rb.gravityScale = m_gravityDefault;    //! Set the gravity back to default player gravity scale
-            m_coyoteTimeCounter = m_coyoteTime;    //! Reset coyote time
+            m_coyoteTimeCounter = m_coyoteTime;      //! Reset coyote time
         }
         else
         {
@@ -153,7 +175,7 @@ public class PlayerCharacter : MonoBehaviour
         m_rb.velocityY = m_jumpForce;  //! setting the velocity seems to feel better should show desinger both implementation
         m_jumpCount++;
         lastGroundedTime = 0;
-        lastjumpTime = 0f;
+        m_jumpTime = 0f;
         m_isJumping = true;
         jumpInputReleased = false;
     }
@@ -175,8 +197,14 @@ public class PlayerCharacter : MonoBehaviour
         //! Apply accleration
         m_rb.AddForceX(movement);
 
+        //! Cap horizontal speed
+        if(m_maxHorizontalVelocity <= Mathf.Abs(m_rb.velocityX))
+        {
+            m_rb.velocityX = m_maxHorizontalVelocity * Mathf.Sign(m_rb.velocityX);
+        }
+
         //! Make sure to flip the player if there is a change in direction
-        if(m_movement.x > 0 && !m_isFaceingRight)
+        if (m_movement.x > 0 && !m_isFaceingRight)
         {
             Flip();
         }
@@ -196,7 +224,19 @@ public class PlayerCharacter : MonoBehaviour
 
     private void Dash()
     {
-
+        if (m_canDash)
+        { 
+            if (m_isFaceingRight)
+            {
+                m_rb.velocityX = m_dashSpeed;
+            }
+            else
+            {
+                m_rb.velocityX = -m_dashSpeed;
+            }
+            m_isDashing = true;
+            m_dashCount++;
+        }
     }
 
     private void ApplyFriction()

@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputValue value)
     {
         Vector2 moveAxisVal = value.Get<Vector2>();
-        
+
         m_character.OnMoveInput(moveAxisVal);
     }
 
@@ -104,6 +104,11 @@ public class PlayerController : MonoBehaviour
     {
         print("attack!!!");
         m_character.OnAttackInput();
+    }
+    public void OnDash()
+    {
+      print("DASH!!!");
+      m_character.OnDashInput();
     }
     #endregion
 
