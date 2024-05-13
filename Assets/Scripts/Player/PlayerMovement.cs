@@ -3,10 +3,20 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float MoveSpeed = 5f;
+    [SerializeField]
+    private float m_moveSpeed = 5f;
+
+    [SerializeField]
+    private float m_linearDrag = 1f;
+
     private Rigidbody2D m_rb;
     private Vector2 m_movement;
     private float m_RotationAngle;
+    private bool isFaceingRight;
+
+    public float m_jumpForce = 20f;
+    public float jumpTime = 0.35f;
+    public float jumpTimeCounter;
 
     // Start is called before the first frame update
     void Start()
@@ -18,24 +28,27 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         //! seem to be the most common suggested wayt o move a top down player movement
-        m_rb.MovePositionAndRotation(m_rb.position + m_movement * MoveSpeed * Time.fixedDeltaTime, m_RotationAngle);
-        m_rb.rotation = m_RotationAngle;
+        ApplyMovement();
+    }
+  
+    private void Jump()
+    {
+        m_rb.velocity = new Vector2(m_rb.velocity.x, m_jumpForce);
+    }
+    private void ApplyMovement()
+    {
+        m_rb.velocity = new Vector2 (m_moveSpeed * m_movement.x, m_rb.velocity.y);
     }
 
+    //! listen for input
     private void OnMove(InputValue value)
     {
+        Debug.Log("moving" + value);
         m_movement = value.Get<Vector2>();
-    }
-
-    //private void OnLookAnalog(InputValue value)
-    //{
-    //    Vector2 lookAtRotation = value.Get<Vector2>();
-    //    m_RotationAngle = Mathf.Atan2(lookAtRotation.y, lookAtRotation.x) * Mathf.Rad2Deg - 90f;
-    //}
-
-    private void OnLookMouse(InputValue value)
+    } 
+    private void OnJumpInput(bool isJumpPressed = true)
     {
-        Vector2 lookAtRotation = value.Get<Vector2>() - m_rb.position;
-        m_RotationAngle = Mathf.Atan2(lookAtRotation.y, lookAtRotation.x) * Mathf.Rad2Deg - 90f;
+        Debug.Log("Jump");
+        Jump();
     }
 }
