@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using UnityEngine;
 using Unity.Netcode;
+using UnityEngine.InputSystem;
 
 public class PlayerCharacter : NetworkBehaviour
 {
@@ -12,7 +13,7 @@ public class PlayerCharacter : NetworkBehaviour
     private bool m_isFaceingRight = true;
 
     #region Movement variable
-    [Header ("Movement Variable")]
+    [Header("Movement Variable")]
     [SerializeField, Tooltip("Fastest possible speed the player can move at")]
     private float m_maxHorizontalVelocity;
     [SerializeField, Tooltip("The max movement speed")]
@@ -21,10 +22,10 @@ public class PlayerCharacter : NetworkBehaviour
     private float m_acceleration = 5;    // Player Running Start Speed
     [SerializeField, Tooltip("The decceleration rate of the player")]
     private float m_decceleration = 5f;  // Player Slow Down Speed
-    [SerializeField, Range(0,1), Tooltip("This value is used to make the player feel more snappy when turning, the lower the number the less snappy")]
+    [SerializeField, Range(0, 1), Tooltip("This value is used to make the player feel more snappy when turning, the lower the number the less snappy")]
     private float m_velPow = 0.9f;
     [SerializeField, Range(0, 1), Tooltip("Increase the value if u want the player to not slide so much when stopping")]
-    private float m_frictionValue = 0.2f;      
+    private float m_frictionValue = 0.2f;
 
     private Vector2 m_movement;
     private Vector2 m_currentVelocity;   //! for debugging 
@@ -37,42 +38,41 @@ public class PlayerCharacter : NetworkBehaviour
     float m_jumpForce = 5f;
     [SerializeField, Tooltip("The number of time the player can jump before it has to be grounded")]
     int m_maxJumpCount = 1;
-    [SerializeField]
-    float m_jumpCooldown = 0.5f;          
-    [SerializeField]
+    [SerializeField, Tooltip("When the player jump is on CD the player cannot jump again and if the jump button is released duriing CD it will trigger a jump cut")]
+    float m_jumpCooldown = 0.5f;
+    [SerializeField, Tooltip("Max falling speed of the player")]
     float m_maxFallSpeed = 50f;
-    [SerializeField]
+    [SerializeField, Tooltip("The time allowance for player to jump when walking off a platform")]
     float m_coyoteTime = 0.3f;
-    [SerializeField]
+    [SerializeField, Tooltip("Player default gravity scale")]
     private float m_gravityDefault = 2f;
-    [SerializeField]
+    [SerializeField, Tooltip("The falling gravity once player hit apex of the jump")]
     private float m_fallingGravity = 3f;
+    [SerializeField, Tooltip("The gravity scale that will be applied when player released the jump button duuring mid jump")]
+    private float m_jumpCutGravity = 6f;
     [Header("Ground check values")]
-    [SerializeField]
+    [SerializeField, Tooltip("Size of the box for the box cast to check grounded")]
     private Vector2 boxSize;
-    [SerializeField]
+    [SerializeField, Tooltip("The cast distance of the box cast")]
     private float castDistance;
-    [SerializeField]
+    [SerializeField, Tooltip("The layer that the player will perform a ground check when the cast hits")]
     private LayerMask GroundLayer;
-    
+
     private bool m_isGrounded;
     private int m_jumpCount = 0;
     private float m_jumpCDTimer;
     private float m_coyoteTimeCounter;
-    private float lastGroundedTime = 0f;
-    private float m_jumpTime = 0f;
     private bool m_isJumping = false;
-    private bool jumpInputReleased = false;
     #endregion
 
     #region Dash variable
     [Space]
     [Header("Dash Variable")]
-    [SerializeField]
+    [SerializeField, Tooltip("the velocity that is applied when dash is triggered")]
     private float m_dashSpeed;
-    [SerializeField]
+    [SerializeField, Tooltip("How may dash the player can perform before the CD")]
     private int m_maxDashCount;
-    [SerializeField] 
+    [SerializeField, Tooltip("How long it takes for the dash to reset")]
     private float m_dashCooldown;
 
     private int m_dashCount;
@@ -120,7 +120,7 @@ public class PlayerCharacter : NetworkBehaviour
         if (m_isDashing)
         {
             m_dashCDTimer -= Time.deltaTime;
-            if(m_dashCDTimer <= 0)
+            if (m_dashCDTimer <= 0)
             {
                 m_isDashing = false;
                 m_dashCount = 0;
@@ -145,7 +145,7 @@ public class PlayerCharacter : NetworkBehaviour
             m_rb.gravityScale = m_fallingGravity;
         }
         //! Cap the falling speed
-        if(Mathf.Abs(m_rb.velocityY) >= m_maxFallSpeed)
+        if (Mathf.Abs(m_rb.velocityY) >= m_maxFallSpeed)
         {
             m_rb.velocityY = Mathf.Sign(m_rb.velocityY) * m_maxFallSpeed;
         }
@@ -153,7 +153,7 @@ public class PlayerCharacter : NetworkBehaviour
     }
     private void CheckGrounded()
     {
-        if(Physics2D.BoxCast(transform.position, boxSize, 0 , -transform.up, castDistance, GroundLayer) && !m_isJumping)
+        if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, GroundLayer) && !m_isJumping)
         {
             //! reset jump values
             m_isGrounded = true;
@@ -166,7 +166,7 @@ public class PlayerCharacter : NetworkBehaviour
             m_isGrounded = false;
             m_coyoteTimeCounter -= Time.deltaTime;   //! Tick down coyoteTime if not grounded
         }
-         
+
     }
     private void OnDrawGizmos()
     {
@@ -180,10 +180,12 @@ public class PlayerCharacter : NetworkBehaviour
         //m_rb.AddForce(Vector2.up * m_jumpForce, ForceMode2D.Impulse);
         m_rb.velocityY = m_jumpForce;  //! setting the velocity seems to feel better should show desinger both implementation
         m_jumpCount++;
-        lastGroundedTime = 0;
-        m_jumpTime = 0f;
         m_isJumping = true;
-        jumpInputReleased = false;
+    }
+    private void JumpCut()
+    {
+        //! When the jump button is released and the player is still jumping cut the jump height by inceasing the player gravity
+        m_rb.gravityScale = m_jumpCutGravity;
     }
     private void ApplyMovement()
     {
@@ -265,12 +267,21 @@ public class PlayerCharacter : NetworkBehaviour
     }
 
     //! listen for input
-    public void OnJumpInput(bool isJumpPressed = true)
+    public void OnJumpInput(bool isPressed)
     { 
-        if( !m_isJumping && ( m_isGrounded || m_jumpCount < m_maxJumpCount || m_coyoteTimeCounter > 0))
+        if(isPressed)
+        {  
+            if (!m_isJumping && (m_isGrounded || m_jumpCount < m_maxJumpCount || m_coyoteTimeCounter > 0))
+            {
+                Jump();
+            }
+        }
+        else if(!isPressed && m_isJumping)
         {
-            Jump();
-        }   
+            Debug.Log("Jump button released");
+            JumpCut();
+        }
+          
     }
     public void OnAttackInput(bool isAttackPressed = true)
     {

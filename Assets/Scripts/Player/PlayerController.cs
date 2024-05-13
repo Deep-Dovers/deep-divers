@@ -86,17 +86,15 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Event Listeners - Gameplay
-    public void OnJump()
+    public void OnJump(InputValue value)
     {
-        print("Jumped");
-
-        m_character.OnJumpInput();
+        bool isButtonPressed = value.Get<float>() > 0f;
+        m_character.OnJumpInput(isButtonPressed);
     }
 
     public void OnMove(InputValue value)
     {
         Vector2 moveAxisVal = value.Get<Vector2>();
-
         m_character.OnMoveInput(moveAxisVal);
     }
 
