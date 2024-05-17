@@ -23,4 +23,4 @@ MonoBehaviour:
   BulletMinBounce: 0
   CooldownTime: 5
   InitialCooldownTime: 0
-  SpawnObject: {fileID: 0}
+  SpawnObject: {fileID: 4181027532803033875, guid: e1e9a651884ebf242b4797d58d238e5e, type: 3}
