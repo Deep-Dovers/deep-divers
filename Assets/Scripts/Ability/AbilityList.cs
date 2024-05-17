@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Attach this class to any player or enemy to assign abilities to them!
+/// </summary>
 public class AbilityList : MonoBehaviour
 {
     [SerializeField]

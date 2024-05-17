@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214c90ff12df8c24f9a6670468731020, type: 3}
   m_Name: BasicAttackData
   m_EditorClassIdentifier: 
-  AbilityName: 
-  UIIcon: {fileID: 0}
+  AbilityName: Attack
+  UIIcon: {fileID: -2413806693520163455, guid: 669beb260a089a843a549c9a6a7b002c, type: 3}
   ProjectileCount: 1
   BulletLifetime: 3
   BulletDamage: 1
@@ -21,6 +21,6 @@ MonoBehaviour:
   BulletMaxTravelRange: 10
   BulletMaxBounce: 0
   BulletMinBounce: 0
-  CooldownTime: 1
+  CooldownTime: 5
   InitialCooldownTime: 0
   SpawnObject: {fileID: 0}
