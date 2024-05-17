@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &433097421 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 127594197053848125, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
+  m_PrefabInstance: {fileID: 2003142380}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,7 +596,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -7906693199331426697, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
   m_PrefabInstance: {fileID: 2003142380}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 433097421}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa0fb1e2fd88ee347a06abb476c756a1, type: 3}
@@ -602,6 +607,21 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2993375408568418178, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
   m_PrefabInstance: {fileID: 2003142380}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &932882417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433097421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c755ff63f85b7524eaeb6dbc8339efed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BasicAttack: {fileID: 0}
+  Abilities: []
+  m_abilityCd: []
 --- !u!1 &1156301962
 GameObject:
   m_ObjectHideFlags: 0
@@ -52965,7 +52985,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2993375408568418178, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 880633382}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 127594197053848125, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 932882417}
   m_SourcePrefab: {fileID: 100100000, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
 --- !u!1 &2004705458
 GameObject:

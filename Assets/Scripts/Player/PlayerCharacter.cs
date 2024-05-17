@@ -93,11 +93,14 @@ public class PlayerCharacter : NetworkBehaviour
     [SerializeField]
     string Race;
 
+    //ability
+    private AbilityList m_abilities;
 
     // Start is called before the first frame update
     void Start()
     {
         m_rb = GetComponent<Rigidbody2D>();
+        m_abilities = GetComponent<AbilityList>();
         m_rb.gravityScale = m_gravityDefault;
         m_coyoteTimeCounter = m_fallingGravity;
         m_jumpCDTimer = m_jumpCooldown;
@@ -286,6 +289,7 @@ public class PlayerCharacter : NetworkBehaviour
     public void OnAttackInput(bool isAttackPressed = true)
     {
         print("I am attacking");
+        m_abilities.Execute();
     }
 
     public void OnMoveInput(Vector2 value)
