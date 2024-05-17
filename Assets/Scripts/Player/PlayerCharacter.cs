@@ -93,7 +93,17 @@ public class PlayerCharacter : NetworkBehaviour
     [SerializeField]
     string Race;
 
-
+    public override void OnNetworkSpawn()
+    {
+        //! ALL THIS IS TO TEST ITS VERY HACKY 
+        Debug.Log("well hello there " + IsLocalPlayer);
+        if(IsLocalPlayer)
+        {
+            var playerController = FindAnyObjectByType<PlayerController>();
+            playerController.GetComponent<PlayerController>().m_character = this;
+        }
+    }
+   
     // Start is called before the first frame update
     void Start()
     {
