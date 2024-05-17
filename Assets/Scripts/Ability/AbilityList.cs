@@ -13,7 +13,9 @@ public class AbilityList : MonoBehaviour
     private AbilityInstanceBase m_basicAttackAbilityInst;
 
     [Header("Un/Equippable")]
-    public List<AbilityInstanceBase> Abilities = new();
+    public List<AbilityData> Abilities = new();
+    private List<AbilityInstanceBase> m_abilityInsts = new();
+
     [SerializeField, ReadOnly]
     private List<float> m_abilityCd = new();
     //this is honestly just for easy reference, might delete
@@ -30,7 +32,7 @@ public class AbilityList : MonoBehaviour
 
         //start from 1 bc 0 is basic atk
         int i = 1;
-        foreach(var ability in Abilities)
+        foreach(var ability in m_abilityInsts)
         {
             m_abilityCd.Add(ability.InitialCooldownTime);
             m_abilityToCd.Add(ability, ability.InitialCooldownTime);
@@ -50,12 +52,12 @@ public class AbilityList : MonoBehaviour
 
     public void Equip(AbilityInstanceBase ability)
     {
-        Abilities.Add(ability);
+        m_abilityInsts.Add(ability);
     }
 
     public void UnEquip(AbilityInstanceBase ability)
     {
-        Abilities.Remove(ability);
+        m_abilityInsts.Remove(ability);
     }
 
     public void Execute(AbilityInstanceBase ability)
@@ -63,7 +65,7 @@ public class AbilityList : MonoBehaviour
         int index = -1;
 
         if(ability != m_basicAttackAbilityInst)
-            index = Abilities.IndexOf(ability);
+            index = m_abilityInsts.IndexOf(ability);
 
         Execute(index);
     }
@@ -87,9 +89,9 @@ public class AbilityList : MonoBehaviour
         }
         else
         {
-            if (Abilities.Count > ind)
+            if (m_abilityInsts.Count > ind)
             {
-                Abilities[ind].Execute();
+                m_abilityInsts[ind].Execute();
                 InitiateCooldown(ind);
             }
             else
@@ -112,10 +114,10 @@ public class AbilityList : MonoBehaviour
             m_abilityToCd[m_basicAttackAbilityInst] = cd;
             m_abilityCd[0] = cd;
         }
-        else if (ind < Abilities.Count)
+        else if (ind < m_abilityInsts.Count)
         {
-            cd = Abilities[ind].CooldownTime;
-            m_abilityToCd[Abilities[ind]] = cd;
+            cd = m_abilityInsts[ind].CooldownTime;
+            m_abilityToCd[m_abilityInsts[ind]] = cd;
             m_abilityCd[ind] = cd;
         }
         
@@ -130,7 +132,7 @@ public class AbilityList : MonoBehaviour
         if (ind < 0)
             return m_abilityToCd[m_basicAttackAbilityInst];
         else
-            return m_abilityToCd[Abilities[ind]];
+            return m_abilityToCd[m_abilityInsts[ind]];
     }
 
     /// <summary>
@@ -154,7 +156,7 @@ public class AbilityList : MonoBehaviour
                     if (i == 0)
                         m_abilityToCd[m_basicAttackAbilityInst] = m_abilityCd[i];
                     else
-                        m_abilityToCd[Abilities[i - 1]] = m_abilityCd[i - 1];
+                        m_abilityToCd[m_abilityInsts[i - 1]] = m_abilityCd[i - 1];
                 }
             }
 
