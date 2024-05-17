@@ -82,6 +82,18 @@ public class PlayerCharacter : NetworkBehaviour
     private Vector2 m_dashDirection = Vector2.zero;
     #endregion
 
+    #region Attack variable
+    [Space]
+    [Header("Attack Variable")]
+    [SerializeField, Tooltip("The interval between each attacl")]
+    private float m_attackCD;
+    [SerializeField, Tooltip("The projectile prefab that is spawned")]
+    private GameObject m_attackProjectile;
+
+    private float m_attackCDTimer;
+    private bool m_isAttacking = false;
+    #endregion
+
     [Space]
     [Header("Not yet done")]
     [SerializeField]
@@ -93,14 +105,21 @@ public class PlayerCharacter : NetworkBehaviour
     [SerializeField]
     string Race;
 
-    //ability
-    private AbilityList m_abilities;
-
+    public override void OnNetworkSpawn()
+    {
+        //! ALL THIS IS TO TEST ITS VERY HACKY 
+        Debug.Log("well hello there " + IsLocalPlayer);
+        if(IsLocalPlayer)
+        {
+            var playerController = FindAnyObjectByType<PlayerController>();
+            playerController.GetComponent<PlayerController>().m_character = this;
+        }
+    }
+   
     // Start is called before the first frame update
     void Start()
     {
         m_rb = GetComponent<Rigidbody2D>();
-        m_abilities = GetComponent<AbilityList>();
         m_rb.gravityScale = m_gravityDefault;
         m_coyoteTimeCounter = m_fallingGravity;
         m_jumpCDTimer = m_jumpCooldown;
@@ -128,6 +147,18 @@ public class PlayerCharacter : NetworkBehaviour
                 m_isDashing = false;
                 m_dashCount = 0;
                 m_canDash = true;
+            }
+        }
+        #endregion
+
+        #region Attack
+        if (m_isAttacking)
+        {
+            m_attackCDTimer -= Time.deltaTime;
+            if (m_attackCDTimer <= 0)
+            {
+                m_isAttacking = false;
+                m_attackCDTimer = m_attackCD;
             }
         }
         #endregion
@@ -169,7 +200,6 @@ public class PlayerCharacter : NetworkBehaviour
             m_isGrounded = false;
             m_coyoteTimeCounter -= Time.deltaTime;   //! Tick down coyoteTime if not grounded
         }
-
     }
     private void OnDrawGizmos()
     {
@@ -268,6 +298,16 @@ public class PlayerCharacter : NetworkBehaviour
             m_rb.AddForceX(-frictionVal, ForceMode2D.Impulse);
         }
     }
+    private void Attack()
+    {
+        if(!m_isAttacking)
+        {
+            m_isAttacking = true;
+            //! need to do the get direction thing for now just take player's forward
+            Vector2 AttackDir = m_isFaceingRight ? Vector2.right : -Vector2.right;
+            Instantiate(m_attackProjectile, transform.position,Quaternion.identity).GetComponent<ProjectileBase>().InitProjectile(AttackDir);
+        }
+    }
 
     //! listen for input
     public void OnJumpInput(bool isPressed)
@@ -289,7 +329,7 @@ public class PlayerCharacter : NetworkBehaviour
     public void OnAttackInput(bool isAttackPressed = true)
     {
         print("I am attacking");
-        m_abilities.Execute();
+        Attack();
     }
 
     public void OnMoveInput(Vector2 value)
