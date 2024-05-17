@@ -23,6 +23,12 @@ namespace Relics
             m_aSrc = GetComponent<AudioSource>();
         }
 
+        public void SetSpawnData(RelicRarity relicRarity, Scriptable_RelicBase data)
+        {
+            m_data = data;
+            m_relicRarity = relicRarity;
+        }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if(!m_data)

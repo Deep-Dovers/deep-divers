@@ -17,12 +17,9 @@ MonoBehaviour:
   Ability: {fileID: 0}
   AttackBoost: {fileID: 0}
   BaseRarity: 4
-  DisplayName: Bounce
+  DisplayName: Explosion
   DefaultDescription: Projectiles create a small explosion when hitting enemies.
   DefaultIcon: {fileID: 0}
-  SpawnSettings:
-    DropRate: 10
-    SpawnCondition: 2
   StatPerLevel:
   - Rarity: 4
     Description: Projectiles create a small explosion when hitting enemies.

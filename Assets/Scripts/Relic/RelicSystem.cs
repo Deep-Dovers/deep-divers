@@ -1,15 +1,13 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Relics
 {
     public class RelicSystem : MonoBehaviour
     {
-        public const int MaxRelicSpawn = 3;
-        private List<Scriptable_RelicBase> m_spawnedRelics = new();
-        public List<Scriptable_RelicBase> AvailableRelics => m_spawnedRelics;
-
         [SerializeField]
         private Scriptable_RelicLootTable RelicLootTable;
 
@@ -36,13 +34,16 @@ namespace Relics
             }
         }
 
+        [Button]
         public void GenerateRelics()
         {
-            AvailableRelics.Clear();
+            List<RelicLootDrop> loot = new();
+            RelicLootTable.GetRandomRelics(ref loot);
 
-            for (int i = 0; i < MaxRelicSpawn; i++)
+            for (int i = 0; i < loot.Count; i++)
             {
-                AvailableRelics.Add(RelicLootTable.GetRandomRelic());
+                Relic r = Instantiate(RelicLootTable.LootGamePrefab, Vector3.zero, Quaternion.identity);
+                r.SetSpawnData(loot[i].DropRarity, loot[i].Relic);
             }
         }
     }

@@ -28,9 +28,6 @@ namespace Relics
         [ShowAssetPreview]
         public Sprite DefaultIcon;
 
-        [Header("Spawn")]
-        public RelicSpawn SpawnSettings;
-
         [Header("Stats (Per Level)")]
         public List<RelicStatPerRarity> StatPerLevel = new();
 
@@ -61,15 +58,6 @@ namespace Relics
         public string GetName(int index)
         {
             return GetName(StatPerLevel[index].Rarity);
-        }
-
-        /// <summary>
-        /// Converts the drop rate from 0-100% to 0f-1f
-        /// </summary>
-        /// <returns>Drop rate between 0f-1f</returns>
-        public float GetNormalizedDropRate()
-        {
-            return SpawnSettings.DropRate / 100f;
         }
 
         public virtual void ApplyToPlayer(GameObject player)
