@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4036139410776023047}
   - component: {fileID: -1012475179204701472}
   - component: {fileID: -7906693199331426697}
+  - component: {fileID: 2901693524020258995}
   - component: {fileID: -4967147638438208130}
   - component: {fileID: 7492358621380129424}
   - component: {fileID: 1950759867324144193}
@@ -106,7 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1691153687
+  GlobalObjectIdHash: 3681941828
   InScenePlacedSourceGlobalObjectIdHash: 3681941828
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -150,10 +151,27 @@ MonoBehaviour:
   m_dashSpeed: 35
   m_maxDashCount: 0
   m_dashCooldown: 0.5
+  m_attackCD: 0
+  m_attackProjectile: {fileID: 0}
   AirControlsStrength: 0
   SlowFallSpeed: 0
   Role: 
   Race: 
+--- !u!114 &2901693524020258995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127594197053848125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c755ff63f85b7524eaeb6dbc8339efed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_basicAttackData: {fileID: 11400000, guid: 1a570b325676d8847ac645f42fc3b1dc, type: 2}
+  Abilities: []
+  m_abilityCd: []
 --- !u!50 &-4967147638438208130
 Rigidbody2D:
   serializedVersion: 4
