@@ -82,6 +82,18 @@ public class PlayerCharacter : NetworkBehaviour
     private Vector2 m_dashDirection = Vector2.zero;
     #endregion
 
+    #region Attack variable
+    [Space]
+    [Header("Attack Variable")]
+    [SerializeField, Tooltip("The interval between each attacl")]
+    private float m_attackCD;
+    [SerializeField, Tooltip("The projectile prefab that is spawned")]
+    private GameObject m_attackProjectile;
+
+    private float m_attackCDTimer;
+    private bool m_isAttacking = false;
+    #endregion
+
     [Space]
     [Header("Not yet done")]
     [SerializeField]
@@ -138,6 +150,18 @@ public class PlayerCharacter : NetworkBehaviour
             }
         }
         #endregion
+
+        #region Attack
+        if (m_isAttacking)
+        {
+            m_attackCDTimer -= Time.deltaTime;
+            if (m_attackCDTimer <= 0)
+            {
+                m_isAttacking = false;
+                m_attackCDTimer = m_attackCD;
+            }
+        }
+        #endregion
     }
     // Anything that relates to physics is done here
     void FixedUpdate()
@@ -176,7 +200,6 @@ public class PlayerCharacter : NetworkBehaviour
             m_isGrounded = false;
             m_coyoteTimeCounter -= Time.deltaTime;   //! Tick down coyoteTime if not grounded
         }
-
     }
     private void OnDrawGizmos()
     {
@@ -275,6 +298,16 @@ public class PlayerCharacter : NetworkBehaviour
             m_rb.AddForceX(-frictionVal, ForceMode2D.Impulse);
         }
     }
+    private void Attack()
+    {
+        if(!m_isAttacking)
+        {
+            m_isAttacking = true;
+            //! need to do the get direction thing for now just take player's forward
+            Vector2 AttackDir = m_isFaceingRight ? Vector2.right : -Vector2.right;
+            Instantiate(m_attackProjectile, transform.position,Quaternion.identity).GetComponent<ProjectileBase>().InitProjectile(AttackDir);
+        }
+    }
 
     //! listen for input
     public void OnJumpInput(bool isPressed)
@@ -296,6 +329,7 @@ public class PlayerCharacter : NetworkBehaviour
     public void OnAttackInput(bool isAttackPressed = true)
     {
         print("I am attacking");
+        Attack();
     }
 
     public void OnMoveInput(Vector2 value)
