@@ -20,8 +20,9 @@ public class PlayerController : MonoBehaviour
     private string m_uId = string.Empty;
     public string UniqueId => m_uId;
 
+    //! so i can test movement
     [Header("Character")]
-    [SerializeField, ReadOnly]
+    [SerializeField]
     private PlayerCharacter m_character;
 
     //event system/input
@@ -85,17 +86,15 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Event Listeners - Gameplay
-    public void OnJump()
+    public void OnJump(InputValue value)
     {
-        print("Jumped");
-
-        m_character.OnJumpInput();
+        bool isButtonPressed = value.Get<float>() > 0f;
+        m_character.OnJumpInput(isButtonPressed);
     }
 
     public void OnMove(InputValue value)
     {
         Vector2 moveAxisVal = value.Get<Vector2>();
-        
         m_character.OnMoveInput(moveAxisVal);
     }
 
@@ -103,6 +102,11 @@ public class PlayerController : MonoBehaviour
     {
         print("attack!!!");
         m_character.OnAttackInput();
+    }
+    public void OnDash()
+    {
+      print("DASH!!!");
+      m_character.OnDashInput();
     }
     #endregion
 
