@@ -1,2 +1,13 @@
 fileFormatVersion: 2
 guid: 214c90ff12df8c24f9a6670468731020
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - UIIcon: {instanceID: 0}
+  - SpawnObject: {fileID: 4181027532803033875, guid: e1e9a651884ebf242b4797d58d238e5e, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

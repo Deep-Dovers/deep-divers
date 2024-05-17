@@ -15,11 +15,6 @@ public class ProjectileBase : MonoBehaviour
 
     private Vector3 m_direction;
     private Vector3 m_startingposition;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -43,5 +38,19 @@ public class ProjectileBase : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //Destroy(gameObject);
+    }
+
+    public void Setup(float dmg, float speed, float lifetime, float range)
+    {
+        m_damageValue = dmg;
+
+        m_speed = speed;
+        m_lifeTime = lifetime;
+        m_range = range;
+    }
+
+    public void SetTravelDirection(Vector2 direction)
+    {
+        m_direction = direction;
     }
 }

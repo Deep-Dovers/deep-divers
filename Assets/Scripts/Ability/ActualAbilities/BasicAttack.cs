@@ -9,7 +9,7 @@ public class BasicAttack : AbilityInstanceBase
     {
     }
 
-    public override void Execute()
+    /*public override void Execute()
     {
         base.Execute();
     }
@@ -23,5 +23,5 @@ public class BasicAttack : AbilityInstanceBase
             //temp
             GameObject b = new GameObject();
         }
-    }
+    }*/
 }

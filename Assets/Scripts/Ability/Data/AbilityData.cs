@@ -11,12 +11,16 @@ public class AbilityData : ScriptableObject
     
     [Header("Basic Values")]
     public int ProjectileCount = 1;
+    //public float ProjectileSpawnAngle = 0f;
+    //public float BulletSpawnWait = 0f;
     public float BulletLifetime = 3f;
     public float BulletDamage = 1f;
     public float BulletSpeed = 10f;
     public float BulletMaxTravelRange = 10f;
     public int BulletMaxBounce = 0;
     public int BulletMinBounce = 0;
+
+    [Header("Cooldown")]
     [Tooltip("Cooldown time")]
     public float CooldownTime = 1f;
     //start with cd or not

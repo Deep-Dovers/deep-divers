@@ -30,6 +30,8 @@ public class AbilityInstanceBase
     public float InitialCooldownTime { get; protected set; } = 0f;
     
     public float CurrentCooldown { get; protected set; }
+    private Vector3 m_myPos = Vector3.zero;
+    private Vector2 m_abilityDir = Vector3.zero;
 
     public AbilityInstanceBase()
     {
@@ -57,15 +59,29 @@ public class AbilityInstanceBase
         CurrentCooldown = CooldownTime;
     }
 
-    public virtual void Execute()
+    public virtual void Execute(Vector3 myPos, Vector3 dir)
     {
+        m_myPos = myPos;
+        m_abilityDir = dir;
+
         ApplyModifiers();
         SpawnBullets();
     }
 
     public virtual void SpawnBullets()
     {
+        GameObject toSpawn = m_data ? m_data.SpawnObject : null;
 
+        for (int i = 0; i < ProjectileCount; i++)
+        {
+            if(toSpawn)
+            {
+                ProjectileBase p = GameObject.Instantiate(toSpawn, m_myPos, Quaternion.identity).GetComponent<ProjectileBase>();
+
+                p.Setup(BulletDamage, BulletSpeed, BulletLifetime, BulletMaxTravelRange);
+                p.SetTravelDirection(m_abilityDir);
+            }
+        }
     }
 
     public virtual void ApplyModifiers()

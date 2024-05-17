@@ -11,6 +11,7 @@ public class PlayerCharacter : NetworkBehaviour
     //! private fields / Debugging Values
     private Rigidbody2D m_rb;
     private bool m_isFaceingRight = true;
+    public Vector2 FacingDir => m_isFaceingRight ? Vector2.right : Vector2.left;
 
     #region Movement variable
     [Header("Movement Variable")]
@@ -105,20 +106,26 @@ public class PlayerCharacter : NetworkBehaviour
     [SerializeField]
     string Race;
 
+    #region Abilities
+    AbilityList m_abilities;
+    #endregion
+
     public override void OnNetworkSpawn()
     {
         //! ALL THIS IS TO TEST ITS VERY HACKY 
         Debug.Log("well hello there " + IsLocalPlayer);
-        if(IsLocalPlayer)
+        if (IsLocalPlayer)
         {
             var playerController = FindAnyObjectByType<PlayerController>();
             playerController.GetComponent<PlayerController>().m_character = this;
         }
     }
-   
+
     // Start is called before the first frame update
     void Start()
     {
+        m_abilities = GetComponent<AbilityList>();
+
         m_rb = GetComponent<Rigidbody2D>();
         m_rb.gravityScale = m_gravityDefault;
         m_coyoteTimeCounter = m_fallingGravity;
@@ -152,7 +159,7 @@ public class PlayerCharacter : NetworkBehaviour
         #endregion
 
         #region Attack
-        if (m_isAttacking)
+        /*if (m_isAttacking)
         {
             m_attackCDTimer -= Time.deltaTime;
             if (m_attackCDTimer <= 0)
@@ -160,7 +167,7 @@ public class PlayerCharacter : NetworkBehaviour
                 m_isAttacking = false;
                 m_attackCDTimer = m_attackCD;
             }
-        }
+        }*/
         #endregion
     }
     // Anything that relates to physics is done here
@@ -233,13 +240,13 @@ public class PlayerCharacter : NetworkBehaviour
         float accelRate = (Mathf.Abs(maxSpeed) > 0.01f) ? m_acceleration : m_decceleration;
 
         // Mulultiplayer the accleration  with a set power so when changing direction its more snappy and also apply back the sign so we know we moving left or right
-        float movement  = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, m_velPow) * Mathf.Sign(speedDif);
-       
+        float movement = Mathf.Pow(Mathf.Abs(speedDif) * accelRate, m_velPow) * Mathf.Sign(speedDif);
+
         //! Apply accleration
         m_rb.AddForceX(movement);
 
         //! Cap horizontal speed
-        if(m_maxHorizontalVelocity <= Mathf.Abs(m_rb.velocityX))
+        if (m_maxHorizontalVelocity <= Mathf.Abs(m_rb.velocityX))
         {
             m_rb.velocityX = m_maxHorizontalVelocity * Mathf.Sign(m_rb.velocityX);
         }
@@ -266,7 +273,7 @@ public class PlayerCharacter : NetworkBehaviour
     private void Dash()
     {
         if (m_canDash)
-        { 
+        {
             if (m_isFaceingRight)
             {
                 m_rb.velocityX = m_dashSpeed;
@@ -278,7 +285,7 @@ public class PlayerCharacter : NetworkBehaviour
             m_isDashing = true;
             m_dashCDTimer = m_dashCooldown;
             m_dashCount++;
-            if(m_dashCount >= m_maxDashCount)
+            if (m_dashCount >= m_maxDashCount)
             {
                 m_canDash = false;
             }
@@ -288,7 +295,7 @@ public class PlayerCharacter : NetworkBehaviour
     private void ApplyFriction()
     {
         //! Make sure we are grounded and there is currently forward or back is not being pressed
-        if(m_isGrounded && Mathf.Abs(m_movement.x) < 0.01)
+        if (m_isGrounded && Mathf.Abs(m_movement.x) < 0.01)
         {
             //! See which is smaller currently my velocity or the friction value
             float frictionVal = Mathf.Min(Mathf.Abs(m_rb.velocityX), Mathf.Abs(m_frictionValue));
@@ -298,33 +305,34 @@ public class PlayerCharacter : NetworkBehaviour
             m_rb.AddForceX(-frictionVal, ForceMode2D.Impulse);
         }
     }
+
+    /// <summary>
+    /// Basic attack
+    /// </summary>
     private void Attack()
     {
-        if(!m_isAttacking)
-        {
-            m_isAttacking = true;
-            //! need to do the get direction thing for now just take player's forward
-            Vector2 AttackDir = m_isFaceingRight ? Vector2.right : -Vector2.right;
-            Instantiate(m_attackProjectile, transform.position,Quaternion.identity).GetComponent<ProjectileBase>().InitProjectile(AttackDir);
-        }
+        //! need to do the get direction thing for now just take player's forward
+        m_abilities.MyFacing = FacingDir;
+
+        m_abilities.Execute();
     }
 
     //! listen for input
     public void OnJumpInput(bool isPressed)
-    { 
-        if(isPressed)
-        {  
+    {
+        if (isPressed)
+        {
             if (!m_isJumping && (m_isGrounded || m_jumpCount < m_maxJumpCount || m_coyoteTimeCounter > 0))
             {
                 Jump();
             }
         }
-        else if(!isPressed && m_isJumping)
+        else if (!isPressed && m_isJumping)
         {
             Debug.Log("Jump button released");
             JumpCut();
         }
-          
+
     }
     public void OnAttackInput(bool isAttackPressed = true)
     {

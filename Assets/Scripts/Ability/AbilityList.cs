@@ -22,6 +22,9 @@ public class AbilityList : MonoBehaviour
     private Dictionary<AbilityInstanceBase, float> m_abilityToCd = new();
     private Coroutine m_cdCr = null;
 
+    //temp public cos idk what will be common between player char and enemy
+    public Vector2 MyFacing = Vector2.zero;
+
     private void Awake()
     {
         m_basicAttackAbilityInst = new BasicAttack(m_basicAttackData);
@@ -84,14 +87,14 @@ public class AbilityList : MonoBehaviour
 
         if (ind < 0)
         {
-            m_basicAttackAbilityInst.Execute();
+            m_basicAttackAbilityInst.Execute(transform.position, MyFacing);
             InitiateCooldown();
         }
         else
         {
             if (m_abilityInsts.Count > ind)
             {
-                m_abilityInsts[ind].Execute();
+                m_abilityInsts[ind].Execute(transform.position, Vector3.zero);
                 InitiateCooldown(ind);
             }
             else
