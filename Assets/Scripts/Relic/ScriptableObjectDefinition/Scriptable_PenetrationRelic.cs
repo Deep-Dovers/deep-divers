@@ -12,6 +12,7 @@ public class Scriptable_PenetrationRelic : Scriptable_RelicBase
         Debug.Log("penetration");
 
         //apply modifier here
+        base.ApplyToPlayer(player);
     }
 
     public override void RemoveFromPlayer(GameObject player) { }

@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 9218042187731068567}
   m_Layer: 6
   m_Name: PlayerCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -172,6 +172,7 @@ MonoBehaviour:
   m_basicAttackData: {fileID: 11400000, guid: 1a570b325676d8847ac645f42fc3b1dc, type: 2}
   Abilities: []
   m_abilityCd: []
+  MyFacing: {x: 0, y: 0}
 --- !u!50 &-4967147638438208130
 Rigidbody2D:
   serializedVersion: 4

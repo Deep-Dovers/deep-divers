@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Base class for all abilities
@@ -9,13 +11,16 @@ public class AbilityInstanceBase
     [Header("UI Values")]
     public string AbilityName = "Lorem Ipsum My Foot";
 
+    [Header("Type")]
+    public Relics.RelicSkillTypes Type;
+
     [Header("Modifiers")]
     public List<AbilityModifierBase> Modifiers = new();
 
     [Header("Basic Values")]
     [SerializeField, NaughtyAttributes.ReadOnly]
     private AbilityData m_data; //base ability data without modifiers
-
+    public AbilityData AbilityData => m_data;
     //declare here so that it can be modified by modifiers
     //m_data will contain the base data
     public int ProjectileCount { get; protected set; } = 1;
@@ -28,10 +33,13 @@ public class AbilityInstanceBase
     public float CooldownTime { get; protected set; } = 0f;
     //start with cd or not
     public float InitialCooldownTime { get; protected set; } = 0f;
-    
-    public float CurrentCooldown { get; protected set; }
+
+    public float CurrentCooldown { get; protected set; } = 0f;
     private Vector3 m_myPos = Vector3.zero;
     private Vector2 m_abilityDir = Vector3.zero;
+
+    public UnityEvent<float> EOnAbilityCooldownUpdate { get; protected set; } = new();
+    public UnityEvent<bool> EOnAbilityTriggered { get; protected set; } = new();
 
     public AbilityInstanceBase()
     {
@@ -65,6 +73,7 @@ public class AbilityInstanceBase
         m_abilityDir = dir;
 
         ApplyModifiers();
+        EOnAbilityTriggered?.Invoke(true);
         SpawnBullets();
     }
 
@@ -78,8 +87,8 @@ public class AbilityInstanceBase
             {
                 ProjectileBase p = GameObject.Instantiate(toSpawn, m_myPos, Quaternion.identity).GetComponent<ProjectileBase>();
 
-                p.Setup(BulletDamage, BulletSpeed, BulletLifetime, BulletMaxTravelRange);
                 p.SetTravelDirection(m_abilityDir);
+                p.Setup(BulletDamage, BulletSpeed, BulletLifetime, BulletMaxTravelRange);
             }
         }
     }
@@ -90,5 +99,11 @@ public class AbilityInstanceBase
         {
             mod.ApplyModifier(this);
         }
+    }
+
+    public void SetCooldown(float cooldown)
+    {
+        CurrentCooldown = cooldown;
+        EOnAbilityCooldownUpdate?.Invoke(cooldown);
     }
 }

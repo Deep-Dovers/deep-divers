@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class ProjectileBase : MonoBehaviour
     private float m_lifeTime = 2f;
     [SerializeField]
     private float m_range = 5f;
-
+    [SerializeField, ReadOnly]
     private Vector3 m_direction;
     private Vector3 m_startingposition;
 

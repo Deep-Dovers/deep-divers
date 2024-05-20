@@ -8,20 +8,8 @@ public class BasicAttack : AbilityInstanceBase
     public BasicAttack(AbilityData data) : base(data)
     {
     }
-
-    /*public override void Execute()
-    {
-        base.Execute();
+    public static BasicAttack CreateInstance(AbilityData data) 
+    { 
+        return new BasicAttack(data); 
     }
-
-    public override void SpawnBullets()
-    {
-        base.SpawnBullets();
-
-        for (int i = 0; i < ProjectileCount; i++)
-        {
-            //temp
-            GameObject b = new GameObject();
-        }
-    }*/
 }

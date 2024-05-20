@@ -8,6 +8,10 @@ public class AbilityData : ScriptableObject
     public string AbilityName;
     [NaughtyAttributes.ShowAssetPreview]
     public Sprite UIIcon;
+
+    [Header("Type")]
+    public Relics.RelicSkillTypes Type;
+    public AbilityInstanceBase AbilityScriptRef;
     
     [Header("Basic Values")]
     public int ProjectileCount = 1;
@@ -29,4 +33,9 @@ public class AbilityData : ScriptableObject
 
     [Header("Prefab")]
     public GameObject SpawnObject;
+
+    public AbilityInstanceBase CreateAbilityInstance()
+    {
+        return new AbilityInstanceBase(this);
+    }
 }
