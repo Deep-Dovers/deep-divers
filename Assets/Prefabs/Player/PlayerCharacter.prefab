@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7492358621380129424}
   - component: {fileID: 1950759867324144193}
   - component: {fileID: 9218042187731068567}
+  - component: {fileID: 1208122959804917158}
   m_Layer: 6
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -83,7 +84,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -107,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3681941828
+  GlobalObjectIdHash: 1691153687
   InScenePlacedSourceGlobalObjectIdHash: 3681941828
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -172,6 +173,9 @@ MonoBehaviour:
   m_basicAttackData: {fileID: 11400000, guid: 1a570b325676d8847ac645f42fc3b1dc, type: 2}
   Abilities: []
   m_abilityCd: []
+  EOnAbilityEquipped:
+    m_PersistentCalls:
+      m_Calls: []
   MyFacing: {x: 0, y: 0}
 --- !u!50 &-4967147638438208130
 Rigidbody2D:
@@ -280,6 +284,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d7c879794dfda4687da0e400131852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1208122959804917158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127594197053848125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc15211aae0b6841b17f3541e49f749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 100
+  CurrentHealth: 100
+  EOnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7449711999482075473
 GameObject:
   m_ObjectHideFlags: 0
