@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BasicAttackData
   m_EditorClassIdentifier: 
   AbilityName: Attack
-  UIIcon: {fileID: -2413806693520163455, guid: 669beb260a089a843a549c9a6a7b002c, type: 3}
+  UIIcon: {fileID: 21300000, guid: 017dea4352078564a9414e335d0d3af7, type: 3}
   Type: 1
   ProjectileCount: 1
   BulletLifetime: 3

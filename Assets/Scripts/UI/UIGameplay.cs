@@ -22,16 +22,60 @@ public class UIGameplay : MonoBehaviour
     private UIHudSkill[] m_passiveSkills;
     public UIHudSkill TestBasic;
 
+    private void Awake()
+    {
+        for (int i = 0; i < m_activeSkills.Length; i++)
+            m_activeSkills[i].gameObject.SetActive(false);
+        for (int i = 0; i < m_passiveSkills.Length; i++)
+            m_passiveSkills[i].gameObject.SetActive(false);
+    }
+
     // Update is called once per frame
     void Update()
     {
-        //!! very first iteration to fix later
-        if (m_abilities == null)
-            return;
+    }
 
-        for(int i = 0; i < m_activeSkills.Length; i++)
+    public void SetAbilityListReference(AbilityList abilityList)
+    { 
+        m_abilities = abilityList;
+
+        m_abilities.EOnAbilityEquipped.AddListener(AbilityEquipped);
+
+        //loop through current list to check what has been added
+        for (int i = 0; i < m_abilities.AbilityInstances.Count; i++)
+            AbilityEquipped(m_abilities.AbilityInstances[i], i, true);
+    }
+
+    void AbilityEquipped(AbilityInstanceBase a, int i, bool eq)
+    {
+        //ignore basic attack
+        if (i <= 0)
         {
-            m_activeSkills[i].gameObject.SetActive(i < m_abilities.Abilities.Count);
+            if (eq)
+                TestBasic.SetAbility(a);
+            else
+                TestBasic.RemoveAbility(a);
+
+            return;
+        }
+
+        if(a.Type == Relics.RelicSkillTypes.Active)
+        {
+            m_activeSkills[i].gameObject.SetActive(eq);
+
+            if(eq)
+                m_activeSkills[i].SetAbility(a);
+            else
+                m_activeSkills[i].RemoveAbility(a);
+        }
+        else
+        {
+            m_passiveSkills[i].gameObject.SetActive(eq);
+
+            if (eq)
+                m_passiveSkills[i].SetAbility(a);
+            else
+                m_passiveSkills[i].RemoveAbility(a);
         }
     }
 }

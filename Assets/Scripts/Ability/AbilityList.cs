@@ -3,6 +3,7 @@ using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Attach this class to any player or enemy to assign abilities to them!
@@ -15,7 +16,8 @@ public class AbilityList : MonoBehaviour
 
     [Header("Un/Equippable")]
     public List<AbilityData> Abilities = new();
-    private List<AbilityInstanceBase> m_abilityInsts = new();
+    public List<AbilityInstanceBase> AbilityInstances
+    { get; protected set; } = new();
 
     [SerializeField, ReadOnly]
     private List<float> m_abilityCd = new();
@@ -23,8 +25,8 @@ public class AbilityList : MonoBehaviour
     private Dictionary<AbilityInstanceBase, float> m_abilityToCd = new();
     private Coroutine m_cdCr = null;
 
-    //testing ui
-    public UIGameplay UIGameplay;
+    //instance, index, equip/unequip
+    public UnityEvent<AbilityInstanceBase, int, bool> EOnAbilityEquipped = new();
 
     //temp public cos idk what will be common between player char and enemy
     [HideInInspector]
@@ -37,11 +39,13 @@ public class AbilityList : MonoBehaviour
 
     private void OnDestroy()
     {
-        foreach (var inst in m_abilityInsts)
+        foreach (var inst in AbilityInstances)
         {
             inst.EOnAbilityTriggered.RemoveAllListeners();
             inst.EOnAbilityCooldownUpdate.RemoveAllListeners();
         }
+
+        EOnAbilityEquipped.RemoveAllListeners();
 
         m_abilityCd.Clear();
         m_abilityToCd.Clear();
@@ -49,7 +53,7 @@ public class AbilityList : MonoBehaviour
 
     public AbilityInstanceBase Equip(AbilityData data)
     {
-        AbilityInstanceBase inst = m_abilityInsts.Find(x => x.AbilityData == data);
+        AbilityInstanceBase inst = AbilityInstances.Find(x => x.AbilityData == data);
 
         if (inst != null)
         {
@@ -74,21 +78,17 @@ public class AbilityList : MonoBehaviour
         Abilities.Add(ability.AbilityData);
 
         //instance
-        m_abilityInsts.Add(ability);
+        AbilityInstances.Add(ability);
 
         m_abilityCd.Add(ability.AbilityData.InitialCooldownTime);
         m_abilityToCd.Add(ability, ability.AbilityData.InitialCooldownTime);
 
-        //testing
-        if(UIGameplay)
-        {
-            ability.RegisterUI(UIGameplay.TestBasic);
-        }
+        EOnAbilityEquipped?.Invoke(ability, AbilityInstances.Count - 1, true);
     }
 
     public void UnEquip(AbilityData data)
     {
-        AbilityInstanceBase inst = m_abilityInsts.Find(x => x.AbilityData == data);
+        AbilityInstanceBase inst = AbilityInstances.Find(x => x.AbilityData == data);
 
         if (inst == null)
         {
@@ -106,12 +106,13 @@ public class AbilityList : MonoBehaviour
             return;
         }
 
-        int ind = m_abilityInsts.IndexOf(ability);
+        int ind = AbilityInstances.IndexOf(ability);
+        EOnAbilityEquipped?.Invoke(ability, ind, false);
 
         //data
         Abilities.Remove(ability.AbilityData);
 
-        m_abilityInsts.Remove(ability);
+        AbilityInstances.Remove(ability);
 
         m_abilityCd.RemoveAt(ind);
         m_abilityToCd.Remove(ability);
@@ -121,7 +122,7 @@ public class AbilityList : MonoBehaviour
     {
         int index = 0;
 
-        index = m_abilityInsts.IndexOf(ability);
+        index = AbilityInstances.IndexOf(ability);
 
         Execute(index);
     }
@@ -137,9 +138,9 @@ public class AbilityList : MonoBehaviour
             Debug.Log("Tried to execute but ability on cooldown!");
             return;
         }
-        if (m_abilityInsts.Count > ind)
+        if (AbilityInstances.Count > ind)
         {
-            m_abilityInsts[ind].Execute(transform.position, MyFacing);
+            AbilityInstances[ind].Execute(transform.position, MyFacing);
             InitiateCooldown(ind);
         }
         else
@@ -155,10 +156,10 @@ public class AbilityList : MonoBehaviour
     {
         float cd = 0f;
 
-        if (ind < m_abilityInsts.Count)
+        if (ind < AbilityInstances.Count)
         {
-            cd = m_abilityInsts[ind].CooldownTime;
-            m_abilityToCd[m_abilityInsts[ind]] = cd;
+            cd = AbilityInstances[ind].CooldownTime;
+            m_abilityToCd[AbilityInstances[ind]] = cd;
             m_abilityCd[ind] = cd;
         }
 
@@ -171,7 +172,7 @@ public class AbilityList : MonoBehaviour
     private float GetCurrentCooldown(int ind = 0)
     {
         if (ind < m_abilityToCd.Count)
-            return m_abilityToCd[m_abilityInsts[ind]];
+            return m_abilityToCd[AbilityInstances[ind]];
         else
             return 0f;
     }
@@ -192,14 +193,20 @@ public class AbilityList : MonoBehaviour
                 if (m_abilityCd[i] > 0f)
                 {
                     m_abilityCd[i] -= Time.deltaTime;
-                    m_abilityToCd[m_abilityInsts[i]] = m_abilityCd[i];
-                    m_abilityInsts[i].SetCooldown(m_abilityCd[i]);
+                    m_abilityToCd[AbilityInstances[i]] = m_abilityCd[i];
+                    AbilityInstances[i].SetCooldown(m_abilityCd[i]);
 
                     canStopCrFlag = false;
 
                     //if first instance of hitting 0
                     if (m_abilityCd[i] <= 0f)
-                        m_abilityInsts[i].EOnAbilityTriggered?.Invoke(false);
+                    {
+                        AbilityInstances[i].EOnAbilityTriggered?.Invoke(false);
+
+                        m_abilityCd[i] = 0f;
+                        m_abilityToCd[AbilityInstances[i]] = m_abilityCd[i];
+                        AbilityInstances[i].SetCooldown(m_abilityCd[i]);
+                    }
                 }
             }
 

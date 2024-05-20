@@ -36,7 +36,16 @@ namespace UI
 
             m_relicIcon.sprite = m_ability.UIIcon;
 
-            m_currCdPercent = 0f;
+            if(a.InitialCooldownTime <= 0f)
+            {
+                m_relicIcon.color = Color.white;
+                SetCooldown(a.CurrentCooldown / a.CooldownTime);
+            }
+            else
+            {
+                m_relicIcon.color = Color.grey;
+                SetCooldown(a.InitialCooldownTime / a.CooldownTime);
+            }
 
             a.EOnAbilityCooldownUpdate.AddListener(SetCooldown);
             a.EOnAbilityTriggered.AddListener(OnAbilityTriggered);
@@ -47,10 +56,13 @@ namespace UI
             m_abilityInstRef.EOnAbilityCooldownUpdate.RemoveListener(SetCooldown);
             m_abilityInstRef.EOnAbilityTriggered.RemoveListener(OnAbilityTriggered);
 
+            //set to null just so we can see
+            m_relicIcon.sprite = null;
+
             m_abilityInstRef = null;
             m_ability = null;
 
-            m_currCdPercent = 0f;
+            SetCooldown(0f);
         }
 
         public void SetCooldown(float cooldownPercent)
