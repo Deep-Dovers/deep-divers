@@ -13,10 +13,10 @@ namespace Relics
         [HideInInspector]
         public RelicSkillTypes SkillSubType;
         [ShowIf("Type", RelicTypes.Active)]
-        public ScriptableObject Ability; //placeholder
+        public AbilityData Ability; //placeholder
 
         [ShowIf("Type", RelicTypes.Passive)]
-        public ScriptableObject AttackBoost;
+        public AbilityModifierBase AttackBoost;
         
         public RelicRarity BaseRarity;
         //------------------------------------------------
@@ -61,9 +61,25 @@ namespace Relics
         }
 
         public virtual void ApplyToPlayer(GameObject player)
-        { //empty
+        {
+            var aList = player.GetComponent<AbilityList>();
+
+            if (!aList)
+                return;
+
+            if(Type == RelicTypes.Active)
+                aList.Equip(Ability);
         }
 
-        public virtual void RemoveFromPlayer(GameObject player) { }
+        public virtual void RemoveFromPlayer(GameObject player) 
+        {
+            var aList = player.GetComponent<AbilityList>();
+
+            if (!aList)
+                return;
+
+            if (Type == RelicTypes.Active)
+                aList.UnEquip(Ability);
+        }
     }
 }

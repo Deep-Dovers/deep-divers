@@ -14,15 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 1
   SkillSubType: 0
-  Ability: {fileID: 0}
-  AttackBoost: {fileID: 0}
+  Ability: {fileID: 11400000, guid: 056afe2779b43f94cbd3bb85227c0354, type: 2}
+  AttackBoost: {fileID: 11400000, guid: 76e3f7ecf9042f44ebf2bed8dfa88bfa, type: 2}
   BaseRarity: 0
   DisplayName: Penetration
   DefaultDescription: Projectiles will penetrate {num} additional enemy.
   DefaultIcon: {fileID: 21300000, guid: 017dea4352078564a9414e335d0d3af7, type: 3}
-  SpawnSettings:
-    DropRate: 25
-    SpawnCondition: 2
   StatPerLevel:
   - Rarity: 0
     Description: Projectiles will penetrate 1 additional enemy.
