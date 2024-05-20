@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214c90ff12df8c24f9a6670468731020, type: 3}
   m_Name: test
   m_EditorClassIdentifier: 
-  AbilityName: 
+  AbilityName: aaaaaa
   UIIcon: {fileID: 0}
   Type: 0
   ProjectileCount: 1

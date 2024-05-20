@@ -23,6 +23,9 @@ public class AbilityList : MonoBehaviour
     private Dictionary<AbilityInstanceBase, float> m_abilityToCd = new();
     private Coroutine m_cdCr = null;
 
+    //testing ui
+    public UIGameplay UIGameplay;
+
     //temp public cos idk what will be common between player char and enemy
     [HideInInspector]
     public Vector2 MyFacing = Vector2.zero;
@@ -34,6 +37,12 @@ public class AbilityList : MonoBehaviour
 
     private void OnDestroy()
     {
+        foreach (var inst in m_abilityInsts)
+        {
+            inst.EOnAbilityTriggered.RemoveAllListeners();
+            inst.EOnAbilityCooldownUpdate.RemoveAllListeners();
+        }
+
         m_abilityCd.Clear();
         m_abilityToCd.Clear();
     }
@@ -69,6 +78,24 @@ public class AbilityList : MonoBehaviour
 
         m_abilityCd.Add(ability.AbilityData.InitialCooldownTime);
         m_abilityToCd.Add(ability, ability.AbilityData.InitialCooldownTime);
+
+        //testing
+        if(UIGameplay)
+        {
+            ability.RegisterUI(UIGameplay.TestBasic);
+        }
+    }
+
+    public void UnEquip(AbilityData data)
+    {
+        AbilityInstanceBase inst = m_abilityInsts.Find(x => x.AbilityData == data);
+
+        if (inst == null)
+        {
+            return;
+        }
+
+        UnEquip(inst);
     }
 
     public void UnEquip(AbilityInstanceBase ability)
@@ -164,11 +191,15 @@ public class AbilityList : MonoBehaviour
             {
                 if (m_abilityCd[i] > 0f)
                 {
-                    m_abilityCd[i] -= 1f;
+                    m_abilityCd[i] -= Time.deltaTime;
                     m_abilityToCd[m_abilityInsts[i]] = m_abilityCd[i];
                     m_abilityInsts[i].SetCooldown(m_abilityCd[i]);
 
                     canStopCrFlag = false;
+
+                    //if first instance of hitting 0
+                    if (m_abilityCd[i] <= 0f)
+                        m_abilityInsts[i].EOnAbilityTriggered?.Invoke(false);
                 }
             }
 
@@ -178,16 +209,11 @@ public class AbilityList : MonoBehaviour
             if (canStopCrFlag)
                 break;
 
-            yield return new WaitForSeconds(1f);
+            yield return null;
         }
 
         m_cdCr = null;
 
         yield return null;
-    }
-
-    protected void UpdateUI()
-    {
-
     }
 }

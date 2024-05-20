@@ -67,9 +67,19 @@ namespace Relics
             if (!aList)
                 return;
 
-            aList.Equip(Ability);
+            if(Type == RelicTypes.Active)
+                aList.Equip(Ability);
         }
 
-        public virtual void RemoveFromPlayer(GameObject player) { }
+        public virtual void RemoveFromPlayer(GameObject player) 
+        {
+            var aList = player.GetComponent<AbilityList>();
+
+            if (!aList)
+                return;
+
+            if (Type == RelicTypes.Active)
+                aList.UnEquip(Ability);
+        }
     }
 }

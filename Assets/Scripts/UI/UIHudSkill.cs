@@ -44,6 +44,9 @@ namespace UI
 
         public void RemoveAbility(AbilityInstanceBase a)
         {
+            m_abilityInstRef.EOnAbilityCooldownUpdate.RemoveListener(SetCooldown);
+            m_abilityInstRef.EOnAbilityTriggered.RemoveListener(OnAbilityTriggered);
+
             m_abilityInstRef = null;
             m_ability = null;
 

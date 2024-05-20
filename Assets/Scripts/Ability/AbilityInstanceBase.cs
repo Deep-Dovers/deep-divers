@@ -104,6 +104,11 @@ public class AbilityInstanceBase
     public void SetCooldown(float cooldown)
     {
         CurrentCooldown = cooldown;
-        EOnAbilityCooldownUpdate?.Invoke(cooldown);
+        EOnAbilityCooldownUpdate?.Invoke(CurrentCooldown / CooldownTime);
+    }
+
+    public void RegisterUI(UIHudSkill skill)
+    {
+        skill.SetAbility(this);
     }
 }
