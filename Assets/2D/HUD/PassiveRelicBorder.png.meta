@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      PassiveRelicBorder_0: -7830333558207162121
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

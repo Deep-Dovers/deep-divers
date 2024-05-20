@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ActiveRelic1_0: 5209204461749943907
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
