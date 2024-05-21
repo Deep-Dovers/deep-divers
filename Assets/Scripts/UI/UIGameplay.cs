@@ -22,6 +22,10 @@ public class UIGameplay : MonoBehaviour
     private UIHudSkill[] m_passiveSkills;
     public UIHudSkill TestBasic;
 
+    [Header("debug")]
+    [SerializeField]
+    private PlayerCharacter m_owningCharacter;
+
     private void Awake()
     {
         for (int i = 0; i < m_activeSkills.Length; i++)
@@ -39,14 +43,15 @@ public class UIGameplay : MonoBehaviour
     { 
         m_abilities = abilityList;
 
-        m_abilities.EOnAbilityEquipped.AddListener(AbilityEquipped);
+        m_abilities.EOnAbilityEquipped.AddListener(OnAbilityEquipped);
+        m_abilities.EOnModifierEquipped.AddListener(OnModifierEquipped);
 
         //loop through current list to check what has been added
         for (int i = 0; i < m_abilities.AbilityInstances.Count; i++)
-            AbilityEquipped(m_abilities.AbilityInstances[i], i, true);
+            OnAbilityEquipped(m_abilities.AbilityInstances[i], i, true);
     }
 
-    void AbilityEquipped(AbilityInstanceBase a, int i, bool eq)
+    void OnAbilityEquipped(AbilityInstanceBase a, int i, bool eq)
     {
         //ignore basic attack
         if (i <= 0)
@@ -59,23 +64,21 @@ public class UIGameplay : MonoBehaviour
             return;
         }
 
-        if(a.Type == Relics.RelicSkillTypes.Active)
-        {
-            m_activeSkills[i].gameObject.SetActive(eq);
+        m_activeSkills[i].ShowAbility(eq);
 
-            if(eq)
-                m_activeSkills[i].SetAbility(a);
-            else
-                m_activeSkills[i].RemoveAbility(a);
-        }
+        if(eq)
+            m_activeSkills[i].SetAbility(a);
         else
-        {
-            m_passiveSkills[i].gameObject.SetActive(eq);
+            m_activeSkills[i].RemoveAbility(a);
+    }
 
-            if (eq)
-                m_passiveSkills[i].SetAbility(a);
-            else
-                m_passiveSkills[i].RemoveAbility(a);
-        }
+    void OnModifierEquipped(AbilityModifierBase a, int i, bool eq)
+    {
+        m_passiveSkills[i].ShowAbility(eq);
+
+        if (eq)
+            m_passiveSkills[i].SetModifier(a);
+        else
+            m_passiveSkills[i].RemoveModifier(a);
     }
 }

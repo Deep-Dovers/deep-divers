@@ -67,8 +67,10 @@ namespace Relics
             if (!aList)
                 return;
 
-            if(Type == RelicTypes.Active)
+            if (Type == RelicTypes.Active)
                 aList.Equip(Ability);
+            else
+                aList.EquipModifier(AttackBoost);
         }
 
         public virtual void RemoveFromPlayer(GameObject player) 

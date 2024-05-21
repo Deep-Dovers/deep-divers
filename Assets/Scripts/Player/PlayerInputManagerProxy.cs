@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,6 +24,12 @@ public class PlayerInputManagerProxy : MonoBehaviour
     private UIGameplay m_gameplayUIPrefab;
     //temp
     private UIGameplay m_gameplayUI;
+
+    [Header("Cinemachine Camera")]
+    [SerializeField]
+    private CinemachineTargetGroup m_mainTargetGrp;
+
+    
 
     //temp
     private static int pCount = 0;
@@ -79,6 +86,8 @@ public class PlayerInputManagerProxy : MonoBehaviour
             m_gameplayUI = GameObject.FindAnyObjectByType<UIGameplay>(FindObjectsInactive.Include);
 
         m_gameplayUI.SetAbilityListReference(character.GetComponent<AbilityList>());
+
+        m_mainTargetGrp.AddMember(character.transform, 1f / (float)pCount, 0.25f);
 
         //change control scheme
         controller.OnStart();

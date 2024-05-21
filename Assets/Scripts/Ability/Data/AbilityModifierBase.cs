@@ -33,6 +33,8 @@ public class AbilityModifierBase : ScriptableObject
 
     [Header("UI")]
     public string AbilityName = "Lorem Ipsum My Foot";
+    [ShowAssetPreview]
+    public Sprite Icon;
 
     public void ApplyModifier(in AbilityInstanceBase modTo)
     {
