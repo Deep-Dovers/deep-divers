@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 133d9abce8649bc42af643f20ba2057a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Id>k__BackingField: -1
+  <PlayerIndex>k__BackingField: -1
   m_character: {fileID: 0}
   m_pInputControls: {fileID: 6826934911146926131}
 --- !u!114 &6826934911146926131
@@ -140,7 +140,7 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/Jump[/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Gameplay
+  m_DefaultActionMap: 973fa59c-157e-40c2-b717-65dc8bdc8854
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &4353593985377793100

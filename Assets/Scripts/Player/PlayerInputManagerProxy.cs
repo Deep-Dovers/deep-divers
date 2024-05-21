@@ -18,6 +18,12 @@ public class PlayerInputManagerProxy : MonoBehaviour
     [SerializeField]
     private PlayerCharacter m_charPrefab;
 
+    [Header("Player UI")]
+    [SerializeField]
+    private UIGameplay m_gameplayUIPrefab;
+    //temp
+    private UIGameplay m_gameplayUI;
+
     //temp
     private static int pCount = 0;
 
@@ -63,9 +69,19 @@ public class PlayerInputManagerProxy : MonoBehaviour
     private void SetUpPlayer(PlayerController controller)
     {
         controller.AssignId(pCount++);
+
         PlayerCharacter character = SpawnAndSetCharacter(ref controller);
 
         //do other stuff here
+        if (!m_gameplayUI)
+            m_gameplayUI = Instantiate(m_gameplayUIPrefab);
+        else
+            m_gameplayUI = GameObject.FindAnyObjectByType<UIGameplay>(FindObjectsInactive.Include);
+
+        m_gameplayUI.SetAbilityListReference(character.GetComponent<AbilityList>());
+
+        //change control scheme
+        controller.OnStart();
     }
 
     private PlayerCharacter SpawnAndSetCharacter(ref PlayerController pc)
@@ -73,6 +89,7 @@ public class PlayerInputManagerProxy : MonoBehaviour
         PlayerCharacter ch = Instantiate(m_charPrefab, Vector3.right, Quaternion.identity);
 
         pc.SetCharacter(ch);
+
         return ch;
     }
 }

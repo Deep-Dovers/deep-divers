@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     //! so i can test movement
     [Header("Character")]
     [SerializeField]
-    private PlayerCharacter m_character;
+    public PlayerCharacter m_character;
 
     //event system/input
     [Header("Input")]
