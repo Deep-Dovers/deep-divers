@@ -89,6 +89,10 @@ public class PlayerInputManagerProxy : MonoBehaviour
 
         m_mainTargetGrp.AddMember(character.transform, 1f / (float)pCount, 0.25f);
 
+        //need to loop and reset all target group radius and weight
+        foreach(var elem in m_mainTargetGrp.Targets)
+            elem.Weight = 1f / (float)pCount;
+
         //change control scheme
         controller.OnStart();
     }
