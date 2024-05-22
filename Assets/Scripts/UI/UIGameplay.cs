@@ -13,7 +13,7 @@ public class UIGameplay : MonoBehaviour
 
     [Header("Health")]
     [SerializeField]
-    private UIHealth m_hp;
+    private UIHealth m_myHealth;
 
     [Header("Skill/Abilities")]
     [SerializeField]
@@ -37,6 +37,17 @@ public class UIGameplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public void Setup(PlayerCharacter ch)
+    {
+        m_owningCharacter = ch;
+
+        var ps = ch.GetComponent<PlayerState>();
+
+        ps.EOnHealthChanged.AddListener(OnHealthChanged);
+
+        SetAbilityListReference(ch.GetComponent<AbilityList>());
     }
 
     public void SetAbilityListReference(AbilityList abilityList)
@@ -80,5 +91,10 @@ public class UIGameplay : MonoBehaviour
             m_passiveSkills[i].SetModifier(a);
         else
             m_passiveSkills[i].RemoveModifier(a);
+    }
+
+    void OnHealthChanged(float newPercent)
+    {
+        m_myHealth.SetHealth(newPercent);
     }
 }

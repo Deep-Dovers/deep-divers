@@ -387,7 +387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_abilities: {fileID: 0}
   m_playerNumTxt: {fileID: 685859532054060519}
-  m_hp: {fileID: 7457382413819297224}
+  m_myHealth: {fileID: 7457382413819297224}
   m_activeSkills:
   - {fileID: 2677920539812173966}
   - {fileID: 4601179514986893930}
