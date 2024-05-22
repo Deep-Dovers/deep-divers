@@ -85,7 +85,7 @@ public class PlayerInputManagerProxy : MonoBehaviour
         else
             m_gameplayUI = GameObject.FindAnyObjectByType<UIGameplay>(FindObjectsInactive.Include);
 
-        m_gameplayUI.SetAbilityListReference(character.GetComponent<AbilityList>());
+        m_gameplayUI.Setup(character);
 
         m_mainTargetGrp.AddMember(character.transform, 1f / (float)pCount, 0.25f);
 

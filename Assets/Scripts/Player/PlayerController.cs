@@ -98,15 +98,31 @@ public class PlayerController : MonoBehaviour
         m_character.OnMoveInput(moveAxisVal);
     }
 
+    public void OnDash()
+    {
+        print("DASH!!!");
+        m_character.OnDashInput();
+    }
+
     public void OnAttack()
     {
         print("attack!!!");
         m_character.OnAttackInput();
     }
-    public void OnDash()
+    public void OnAbility1Triggered()
     {
-      print("DASH!!!");
-      m_character.OnDashInput();
+        print("a1!!!");
+        //m_character.OnAttackInput();
+    }
+    public void OnAbility2Triggered()
+    {
+        print("a2!!!");
+        //m_character.OnAttackInput();
+    }
+    public void OnAbility3Triggered()
+    {
+        print("a3!!!");
+        //m_character.OnAttackInput();
     }
     #endregion
 
