@@ -29,10 +29,9 @@ public class PlayerInputManagerProxy : MonoBehaviour
     [SerializeField]
     private CinemachineTargetGroup m_mainTargetGrp;
 
-    
-
     //temp
     private static int pCount = 0;
+    private static PlayerController m_myPlayerController = null;
 
     private void OnValidate()
     {
@@ -80,12 +79,27 @@ public class PlayerInputManagerProxy : MonoBehaviour
         PlayerCharacter character = SpawnAndSetCharacter(ref controller);
 
         //do other stuff here
-        if (!m_gameplayUI)
-            m_gameplayUI = Instantiate(m_gameplayUIPrefab);
-        else
-            m_gameplayUI = GameObject.FindAnyObjectByType<UIGameplay>(FindObjectsInactive.Include);
+        if (m_myPlayerController == null)
+        {
+            m_myPlayerController = controller;
 
-        m_gameplayUI.Setup(character);
+            if (!m_gameplayUI)
+                m_gameplayUI = Instantiate(m_gameplayUIPrefab);
+            else
+                m_gameplayUI = GameObject.FindAnyObjectByType<UIGameplay>(FindObjectsInactive.Include);
+
+            m_gameplayUI.Setup(character);
+        }
+        else
+        {
+            var pUI = character.transform.Find("Canvas (Player)").GetComponent<UIWorldPlayer>();
+
+            if(pUI != null)
+            {
+                pUI.Setup(character);
+                pUI.gameObject.SetActive(true);
+            }
+        }
 
         m_mainTargetGrp.AddMember(character.transform, 1f / (float)pCount, 0.25f);
 

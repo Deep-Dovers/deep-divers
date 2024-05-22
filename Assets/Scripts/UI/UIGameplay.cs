@@ -34,11 +34,6 @@ public class UIGameplay : MonoBehaviour
             m_passiveSkills[i].gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     public void Setup(PlayerCharacter ch)
     {
         m_owningCharacter = ch;
