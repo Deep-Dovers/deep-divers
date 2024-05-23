@@ -22,6 +22,8 @@ public class PlayerInputManagerProxy : MonoBehaviour
     [Header("Player UI")]
     [SerializeField]
     private UIGameplay m_gameplayUIPrefab;
+    [SerializeField]
+    private UIWorldPlayer m_nonSelfPlayerUIPrefab;
     //temp
     private UIGameplay m_gameplayUI;
 
@@ -92,7 +94,7 @@ public class PlayerInputManagerProxy : MonoBehaviour
         }
         else
         {
-            var pUI = character.transform.Find("Canvas (Player)").GetComponent<UIWorldPlayer>();
+            var pUI = Instantiate(m_nonSelfPlayerUIPrefab);
 
             if(pUI != null)
             {
