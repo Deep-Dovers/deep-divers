@@ -91,3 +91,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_charPrefab: {fileID: -7906693199331426697, guid: c9bad9d717083fe4eb3e04db86a158e9, type: 3}
   m_gameplayUIPrefab: {fileID: 3779915320127528630, guid: fa3be88f165e37143b3d324e829842be, type: 3}
+  m_nonSelfPlayerUIPrefab: {fileID: 3473162666526904359, guid: 8079a097c3b76b34c84112a6ffd9cf4d, type: 3}
+  m_mainTargetGrp: {fileID: 0}

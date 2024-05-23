@@ -21,7 +21,9 @@ public class UIHealth : MonoBehaviour
     {
         m_percent = percent;
         m_baseSlider.value = m_percent;
-        m_hpTxt.text = Mathf.CeilToInt(m_percent * 100f).ToString() + "%";
+
+        if(m_hpTxt != null)
+            m_hpTxt.text = Mathf.CeilToInt(m_percent * 100f).ToString() + "%";
     }
 
     public void SetHealth(float curr, float max)

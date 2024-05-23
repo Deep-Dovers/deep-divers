@@ -172,8 +172,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_basicAttackData: {fileID: 11400000, guid: 1a570b325676d8847ac645f42fc3b1dc, type: 2}
   Abilities: []
+  Mods: []
   m_abilityCd: []
   EOnAbilityEquipped:
+    m_PersistentCalls:
+      m_Calls: []
+  EOnModifierEquipped:
     m_PersistentCalls:
       m_Calls: []
   MyFacing: {x: 0, y: 0}
