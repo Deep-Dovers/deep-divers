@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ProjectileBase : MonoBehaviour
 {
@@ -16,6 +17,15 @@ public class ProjectileBase : MonoBehaviour
     [SerializeField, ReadOnly]
     private Vector3 m_direction;
     private Vector3 m_startingposition;
+
+    //events
+    public UnityEvent EOnSpawn { get; private set; } = new();
+    public UnityEvent EOnImpact { get; private set; } = new();
+
+    private void OnDestroy()
+    {
+        EOnImpact.RemoveAllListeners();
+    }
 
     // Update is called once per frame
     void Update()
@@ -38,7 +48,7 @@ public class ProjectileBase : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Destroy(gameObject);
+        EOnImpact?.Invoke();
     }
 
     public void Setup(float dmg, float speed, float lifetime, float range)

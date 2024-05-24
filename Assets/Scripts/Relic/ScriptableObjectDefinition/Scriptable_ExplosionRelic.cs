@@ -12,11 +12,15 @@ public class Scriptable_ExplosionRelic : Scriptable_RelicBase
     [SerializeField]
     private float m_explosionSize = 1f;
 
+    [Header("Spawning/Visuals")]
+    private GameObject m_explosionPrefab;
+
     public override void ApplyToPlayer(GameObject player)
     {
         Debug.Log("EKSUPLOSION");
 
         //apply modifier here
+        base.ApplyToPlayer(player);
     }
 
     public override void RemoveFromPlayer(GameObject player) { }

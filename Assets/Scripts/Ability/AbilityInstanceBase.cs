@@ -8,19 +8,17 @@ using UnityEngine.Events;
 /// </summary>
 public class AbilityInstanceBase
 {
-    [Header("UI Values")]
+    // UI Values
     public string AbilityName = "Lorem Ipsum My Foot";
 
-    [Header("Type")]
+    // Type
     public Relics.RelicSkillTypes Type;
 
-    [Header("Modifiers")]
+    // Modifiers
     public List<AbilityModifierBase> Modifiers = new();
 
-    [Header("Basic Values")]
-    [SerializeField, NaughtyAttributes.ReadOnly]
-    private AbilityData m_data; //base ability data without modifiers
-    public AbilityData AbilityData => m_data;
+    // VALUES THAT CAN BE MODIFIED BY MODIFIERS
+    public AbilityData AbilityData { get; private set; }
     //declare here so that it can be modified by modifiers
     //m_data will contain the base data
     public int ProjectileCount { get; protected set; } = 1;
@@ -32,9 +30,21 @@ public class AbilityInstanceBase
     public int BulletMinBounce { get; protected set; } = 0;
     public float CooldownTime { get; protected set; } = 0f;
     //start with cd or not
-    public float InitialCooldownTime { get; protected set; } = 0f;
-
+    public float OnGetCooldownTime { get; protected set; } = 0f;
+    //================================================================
     public float CurrentCooldown { get; protected set; } = 0f;
+
+    // BASIC, UNMODIFIED VALUES!!!!
+    public int BaseProjectileCount { get; protected set; } = 1;
+    public float BaseBulletLifetime { get; protected set; } = 3f;
+    public float BaseBulletDamage { get; protected set; } = 1f;
+    public float BaseBulletSpeed { get; protected set; } = 10f;
+    public float BaseBulletMaxTravelRange { get; protected set; } = 10f;
+    public int BaseBulletMaxBounce { get; protected set; } = 0;
+    public int BaseBulletMinBounce { get; protected set; } = 0;
+    public float BaseCooldownTime { get; protected set; } = 0f;
+    //================================================================
+
     private Vector3 m_myPos = Vector3.zero;
     private Vector2 m_abilityDir = Vector3.zero;
 
@@ -43,16 +53,15 @@ public class AbilityInstanceBase
 
     public AbilityInstanceBase()
     {
-        m_data = null;
+        AbilityData = null;
 
         CurrentCooldown = 0f;
     }
 
     public AbilityInstanceBase(AbilityData data)
     {
-        m_data = data;
-
-        AbilityName = data.AbilityName;
+        AbilityData = data;
+        AbilityName = data ? data.AbilityName : GetType().Name;
 
         ProjectileCount = data.ProjectileCount;
         BulletLifetime = data.BulletLifetime;
@@ -62,7 +71,7 @@ public class AbilityInstanceBase
         BulletMaxBounce = data.BulletMaxBounce;
         BulletMinBounce = data.BulletMinBounce;
         CooldownTime = data.CooldownTime;
-        InitialCooldownTime = data.InitialCooldownTime;
+        OnGetCooldownTime = data.InitialCooldownTime;
 
         CurrentCooldown = CooldownTime;
     }
@@ -79,7 +88,12 @@ public class AbilityInstanceBase
 
     public virtual void SpawnBullets()
     {
-        GameObject toSpawn = m_data ? m_data.SpawnObject : null;
+        GameObject toSpawn = AbilityData ? AbilityData.SpawnObject : null;
+
+        if(!toSpawn)
+        {
+            Debug.Log($"{ (AbilityData ? AbilityData.AbilityName : GetType().Name)} Missing bullet prefab");
+        }
 
         for (int i = 0; i < ProjectileCount; i++)
         {

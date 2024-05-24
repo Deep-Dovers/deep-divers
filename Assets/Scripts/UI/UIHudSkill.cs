@@ -53,7 +53,7 @@ namespace UI
 
             m_relicIcon.sprite = m_ability.UIIcon;
 
-            if(a.InitialCooldownTime <= 0f)
+            if(a.OnGetCooldownTime <= 0f)
             {
                 m_relicIcon.color = Color.white;
                 SetCooldown(a.CurrentCooldown / a.CooldownTime);
@@ -61,7 +61,7 @@ namespace UI
             else
             {
                 m_relicIcon.color = Color.grey;
-                SetCooldown(a.InitialCooldownTime / a.CooldownTime);
+                SetCooldown(a.OnGetCooldownTime / a.CooldownTime);
             }
 
             a.EOnAbilityCooldownUpdate.AddListener(SetCooldown);
