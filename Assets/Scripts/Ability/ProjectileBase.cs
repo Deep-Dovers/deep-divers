@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ProjectileBase : MonoBehaviour
 {
@@ -16,6 +17,22 @@ public class ProjectileBase : MonoBehaviour
     [SerializeField, ReadOnly]
     private Vector3 m_direction;
     private Vector3 m_startingposition;
+
+    [Header("VFX/Impact")]
+    [SerializeField]
+    private GameObject m_impactPrefab;
+
+    public int MaxPenCount = 1;
+    private int m_currPenCount = 0;
+
+    //events
+    public UnityEvent EOnSpawn { get; private set; } = new();
+    public UnityEvent EOnImpact { get; private set; } = new();
+
+    private void OnDestroy()
+    {
+        EOnImpact.RemoveAllListeners();
+    }
 
     // Update is called once per frame
     void Update()
@@ -38,7 +55,18 @@ public class ProjectileBase : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Destroy(gameObject);
+        if (collision.CompareTag("Player") || collision.CompareTag("FX"))
+            return;
+
+        //!Temp
+        var go = Instantiate(m_impactPrefab, transform.position, Quaternion.identity);
+
+        Destroy(go, .9f);
+
+        EOnImpact?.Invoke();
+
+        if(++m_currPenCount >= MaxPenCount)
+            Destroy(gameObject);
     }
 
     public void Setup(float dmg, float speed, float lifetime, float range)
@@ -53,5 +81,10 @@ public class ProjectileBase : MonoBehaviour
     public void SetTravelDirection(Vector2 direction)
     {
         m_direction = direction;
+    }
+
+    public void ApplyImpactModifiers(UnityEvent e)
+    {
+        EOnImpact = e;
     }
 }

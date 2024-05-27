@@ -8,6 +8,7 @@ namespace Relics
     public class Relic : MonoBehaviour
     {
         private SpriteRenderer m_spRender;
+        private Animator m_animator;
         private Collider2D m_col;
         private AudioSource m_aSrc;
 
@@ -18,9 +19,16 @@ namespace Relics
 
         private void Awake()
         {
-            m_spRender = GetComponent<SpriteRenderer>();
+            m_spRender = GetComponentInChildren<SpriteRenderer>();
+            m_animator = GetComponentInChildren<Animator>();
             m_col = GetComponent<Collider2D>();
             m_aSrc = GetComponent<AudioSource>();
+        }
+
+        private void Start()
+        {
+            m_animator.StopPlayback();
+            m_animator.SetTrigger("GoldSpawn");
         }
 
         public void SetSpawnData(RelicRarity relicRarity, Scriptable_RelicBase data)

@@ -360,8 +360,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalRotation: {x: -0.000000057363525, y: 9.784845e-10, z: 5.612932e-17, w: 1}
+  m_LocalPosition: {x: -0.00000001956969, y: -0.0000011472705, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -436,7 +436,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000001348056fbe827d5
+  m_ApplyToSortingLayers: 0000000001348056fbe827d52f7411e9
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -494,7 +494,6 @@ GameObject:
   - component: {fileID: 641271677}
   - component: {fileID: 641271676}
   - component: {fileID: 641271675}
-  - component: {fileID: 641271674}
   - component: {fileID: 641271673}
   m_Layer: 0
   m_Name: CM_TargetFollowCam
@@ -524,35 +523,6 @@ MonoBehaviour:
   FovRange: {x: 1, y: 100}
   DollyRange: {x: -100, y: 100}
   OrthoSizeRange: {x: 7.5, y: 1000}
---- !u!114 &641271674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 641271672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f38bda98361e1de48a4ca2bd86ea3c17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TargetOffset: {x: 0, y: 0, z: 0}
-  Lookahead:
-    Enabled: 0
-    Time: 0
-    Smoothing: 0
-    IgnoreY: 0
-  Damping: {x: 0.5, y: 0.5}
-  Composition:
-    ScreenPosition: {x: 0, y: 0}
-    DeadZone:
-      Enabled: 0
-      Size: {x: 0.2, y: 0.2}
-    HardLimits:
-      Enabled: 0
-      Size: {x: 0.8, y: 0.8}
-      Offset: {x: 0, y: 0}
-  CenterOnActivate: 1
 --- !u!114 &641271675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -623,7 +593,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 641271672}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.000000057363525, y: 9.784845e-10, z: 5.612932e-17, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -774,9 +744,9 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingLayerID: -384732113
+  m_SortingLayer: -1
+  m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.13999999, y: 0.13999999, z: 0}
   m_MaxChunkCount: 16
@@ -16138,9 +16108,9 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -384732113
+  m_SortingLayer: -1
+  m_SortingOrder: -50
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.13999999, y: 0.13999999, z: 0}
   m_MaxChunkCount: 16
@@ -52938,7 +52908,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4576050070016709321, guid: 70ee678e6f2ae9445a35065e7e891a74, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.86
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 4576050070016709321, guid: 70ee678e6f2ae9445a35065e7e891a74, type: 3}
       propertyPath: m_LocalPosition.z
@@ -52972,6 +52942,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4846024854945159076, guid: 70ee678e6f2ae9445a35065e7e891a74, type: 3}
+      propertyPath: m_data
+      value: 
+      objectReference: {fileID: 11400000, guid: 370fc5fae38761141b6f6c5f75fb11a4, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
