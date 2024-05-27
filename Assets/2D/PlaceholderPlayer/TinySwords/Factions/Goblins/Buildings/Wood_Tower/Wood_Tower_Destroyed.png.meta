@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Wood_Tower_Destroyed_0: -2168542501838057135
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
