@@ -8,7 +8,7 @@ public class ProjectileBase : MonoBehaviour
     [SerializeField]
     private float m_speed = 10f;
     [SerializeField]
-    private float m_damageValue = 1f;
+    private float m_damageValue = 1;
     [SerializeField]
     private float m_lifeTime = 2f;
     [SerializeField]
@@ -36,15 +36,17 @@ public class ProjectileBase : MonoBehaviour
         Destroy(gameObject, m_lifeTime);
         m_direction = direction;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            collision.gameObject.GetComponent<BaseEnemyBehaviour>().DealDamage(m_damageValue);
+        }
         //Destroy(gameObject);
     }
-
     public void Setup(float dmg, float speed, float lifetime, float range)
     {
         m_damageValue = dmg;
-
         m_speed = speed;
         m_lifeTime = lifetime;
         m_range = range;
