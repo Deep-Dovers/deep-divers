@@ -15,11 +15,11 @@ MonoBehaviour:
   Type: 1
   SkillSubType: 0
   Ability: {fileID: 0}
-  AttackBoost: {fileID: 0}
+  AttackBoost: {fileID: 11400000, guid: dd24d66fc913e07429ca98200b537d58, type: 2}
   BaseRarity: 4
   DisplayName: Explosion
   DefaultDescription: Projectiles create a small explosion when hitting enemies.
-  DefaultIcon: {fileID: 0}
+  DefaultIcon: {fileID: 21300000, guid: c730b64b55ffde94d8fc6bfc1eb7fe36, type: 3}
   StatPerLevel:
   - Rarity: 4
     Description: Projectiles create a small explosion when hitting enemies.
@@ -27,3 +27,4 @@ MonoBehaviour:
   - Rarity: 5
     Description: rojectiles create a large explosion when hitting enemies.
     UpgradedIcon: {fileID: 0}
+  m_explosionSize: 1

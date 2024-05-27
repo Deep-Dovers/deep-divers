@@ -2,13 +2,14 @@ using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ProjectileBase : MonoBehaviour
 {
     [SerializeField]
     private float m_speed = 10f;
     [SerializeField]
-    private float m_damageValue = 1;
+    private float m_damageValue = 1f;
     [SerializeField]
     private float m_lifeTime = 2f;
     [SerializeField]
@@ -16,6 +17,15 @@ public class ProjectileBase : MonoBehaviour
     [SerializeField, ReadOnly]
     private Vector3 m_direction;
     private Vector3 m_startingposition;
+
+    //events
+    public UnityEvent EOnSpawn { get; private set; } = new();
+    public UnityEvent EOnImpact { get; private set; } = new();
+
+    private void OnDestroy()
+    {
+        EOnImpact.RemoveAllListeners();
+    }
 
     // Update is called once per frame
     void Update()
@@ -36,17 +46,15 @@ public class ProjectileBase : MonoBehaviour
         Destroy(gameObject, m_lifeTime);
         m_direction = direction;
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            collision.gameObject.GetComponent<BaseEnemyBehaviour>().DealDamage(m_damageValue);
-        }
-        //Destroy(gameObject);
+        EOnImpact?.Invoke();
     }
+
     public void Setup(float dmg, float speed, float lifetime, float range)
     {
         m_damageValue = dmg;
+
         m_speed = speed;
         m_lifeTime = lifetime;
         m_range = range;

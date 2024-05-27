@@ -8,14 +8,20 @@ public class PlayerState : NetworkBehaviour
 {
     public float MaxHealth = 100f;
     public float CurrentHealth = 100f;
-    public float HealthPercent => Mathf.Ceil(CurrentHealth / MaxHealth);
+    public float HealthPercent => (CurrentHealth / MaxHealth);
 
+    //arg = percentage
     public UnityEvent<float> EOnHealthChanged = new();
+
+    public override void OnDestroy()
+    {
+        EOnHealthChanged.RemoveAllListeners();
+    }
 
     public void SetHealth(float health)
     {
         CurrentHealth = health;
-        EOnHealthChanged?.Invoke(CurrentHealth);
+        EOnHealthChanged?.Invoke(CurrentHealth / MaxHealth);
     }
 
     /// <summary>

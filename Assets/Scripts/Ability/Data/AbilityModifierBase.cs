@@ -33,7 +33,14 @@ public class AbilityModifierBase : ScriptableObject
 
     [Header("UI")]
     public string AbilityName = "Lorem Ipsum My Foot";
+    [ShowAssetPreview]
+    public Sprite Icon;
 
+    /// <summary>
+    /// This is for applying any modification to the ability instance,
+    /// i.e adding damage, etc
+    /// </summary>
+    /// <param name="modTo">the target</param>
     public void ApplyModifier(in AbilityInstanceBase modTo)
     {
 
