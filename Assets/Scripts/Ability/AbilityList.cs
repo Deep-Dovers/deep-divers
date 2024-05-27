@@ -1,5 +1,6 @@
 using AssetUsageDetectorNamespace;
 using NaughtyAttributes;
+using Relics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,9 @@ public class AbilityList : MonoBehaviour
     public List<AbilityInstanceBase> AbilityInstances
     { get; protected set; } = new();
 
+    [Header("Modifiers")]
+    public List<AbilityModifierBase> Mods = new();
+
     [SerializeField, ReadOnly]
     private List<float> m_abilityCd = new();
     //this is honestly just for easy reference, might delete
@@ -27,6 +31,7 @@ public class AbilityList : MonoBehaviour
 
     //instance, index, equip/unequip
     public UnityEvent<AbilityInstanceBase, int, bool> EOnAbilityEquipped = new();
+    public UnityEvent<AbilityModifierBase, int, bool> EOnModifierEquipped = new();
 
     //temp public cos idk what will be common between player char and enemy
     [HideInInspector]
@@ -84,6 +89,17 @@ public class AbilityList : MonoBehaviour
         m_abilityToCd.Add(ability, ability.AbilityData.InitialCooldownTime);
 
         EOnAbilityEquipped?.Invoke(ability, AbilityInstances.Count - 1, true);
+    }
+
+    public void EquipModifier(AbilityModifierBase mod)
+    {
+        var m = Mods.Find(x => x == mod);
+
+        if (!Mods.Exists(x => x == mod))
+        {
+            Mods.Add(mod);
+            EOnModifierEquipped?.Invoke(mod, Mods.Count - 1, true);
+        }
     }
 
     public void UnEquip(AbilityData data)

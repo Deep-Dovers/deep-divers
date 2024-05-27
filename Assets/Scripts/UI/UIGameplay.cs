@@ -13,7 +13,7 @@ public class UIGameplay : MonoBehaviour
 
     [Header("Health")]
     [SerializeField]
-    private UIHealth m_hp;
+    private UIHealth m_myHealth;
 
     [Header("Skill/Abilities")]
     [SerializeField]
@@ -21,6 +21,10 @@ public class UIGameplay : MonoBehaviour
     [SerializeField]
     private UIHudSkill[] m_passiveSkills;
     public UIHudSkill TestBasic;
+
+    [Header("debug")]
+    [SerializeField]
+    private PlayerCharacter m_owningCharacter;
 
     private void Awake()
     {
@@ -30,23 +34,30 @@ public class UIGameplay : MonoBehaviour
             m_passiveSkills[i].gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Setup(PlayerCharacter ch)
     {
+        m_owningCharacter = ch;
+
+        var ps = ch.GetComponent<PlayerState>();
+
+        ps.EOnHealthChanged.AddListener(OnHealthChanged);
+
+        SetAbilityListReference(ch.GetComponent<AbilityList>());
     }
 
     public void SetAbilityListReference(AbilityList abilityList)
     { 
         m_abilities = abilityList;
 
-        m_abilities.EOnAbilityEquipped.AddListener(AbilityEquipped);
+        m_abilities.EOnAbilityEquipped.AddListener(OnAbilityEquipped);
+        m_abilities.EOnModifierEquipped.AddListener(OnModifierEquipped);
 
         //loop through current list to check what has been added
         for (int i = 0; i < m_abilities.AbilityInstances.Count; i++)
-            AbilityEquipped(m_abilities.AbilityInstances[i], i, true);
+            OnAbilityEquipped(m_abilities.AbilityInstances[i], i, true);
     }
 
-    void AbilityEquipped(AbilityInstanceBase a, int i, bool eq)
+    void OnAbilityEquipped(AbilityInstanceBase a, int i, bool eq)
     {
         //ignore basic attack
         if (i <= 0)
@@ -59,23 +70,26 @@ public class UIGameplay : MonoBehaviour
             return;
         }
 
-        if(a.Type == Relics.RelicSkillTypes.Active)
-        {
-            m_activeSkills[i].gameObject.SetActive(eq);
+        m_activeSkills[i].ShowAbility(eq);
 
-            if(eq)
-                m_activeSkills[i].SetAbility(a);
-            else
-                m_activeSkills[i].RemoveAbility(a);
-        }
+        if(eq)
+            m_activeSkills[i].SetAbility(a);
         else
-        {
-            m_passiveSkills[i].gameObject.SetActive(eq);
+            m_activeSkills[i].RemoveAbility(a);
+    }
 
-            if (eq)
-                m_passiveSkills[i].SetAbility(a);
-            else
-                m_passiveSkills[i].RemoveAbility(a);
-        }
+    void OnModifierEquipped(AbilityModifierBase a, int i, bool eq)
+    {
+        m_passiveSkills[i].ShowAbility(eq);
+
+        if (eq)
+            m_passiveSkills[i].SetModifier(a);
+        else
+            m_passiveSkills[i].RemoveModifier(a);
+    }
+
+    void OnHealthChanged(float newPercent)
+    {
+        m_myHealth.SetHealth(newPercent);
     }
 }

@@ -157,18 +157,6 @@ public class PlayerCharacter : NetworkBehaviour
             }
         }
         #endregion
-
-        #region Attack
-        /*if (m_isAttacking)
-        {
-            m_attackCDTimer -= Time.deltaTime;
-            if (m_attackCDTimer <= 0)
-            {
-                m_isAttacking = false;
-                m_attackCDTimer = m_attackCD;
-            }
-        }*/
-        #endregion
     }
     // Anything that relates to physics is done here
     void FixedUpdate()
@@ -318,6 +306,7 @@ public class PlayerCharacter : NetworkBehaviour
     }
 
     //! listen for input
+    #region Input
     public void OnJumpInput(bool isPressed)
     {
         if (isPressed)
@@ -350,6 +339,7 @@ public class PlayerCharacter : NetworkBehaviour
         Debug.Log("Dash input received");
         Dash();
     }
+    #endregion
     public void SetOwner(PlayerController owner)
     {
         print("My new owner is player index " + owner.PlayerIndex);
