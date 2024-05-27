@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Button_Hover_3Slides_0: -9173437598748476237
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

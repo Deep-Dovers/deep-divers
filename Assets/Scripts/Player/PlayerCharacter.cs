@@ -7,6 +7,9 @@ public class PlayerCharacter : NetworkBehaviour
 {
     [field: SerializeField, ReadOnly]
     public PlayerController Owner { get; private set; }
+    #region Animation
+    PlayerAnimationState m_animCmp;
+    #endregion
 
     //! private fields / Debugging Values
     private Rigidbody2D m_rb;
@@ -125,6 +128,7 @@ public class PlayerCharacter : NetworkBehaviour
     void Start()
     {
         m_abilities = GetComponent<AbilityList>();
+        m_animCmp = GetComponent<PlayerAnimationState>();
 
         m_rb = GetComponent<Rigidbody2D>();
         m_rb.gravityScale = m_gravityDefault;
@@ -333,6 +337,11 @@ public class PlayerCharacter : NetworkBehaviour
     {
         Debug.Log("moving" + value);
         m_movement = value;
+
+        /*if (Mathf.Abs(m_movement.x) > 0f)
+        {
+            m_animCmp.TransitToAnimationState(PlayerAnimationState.AnimationState.Walk);
+        }*/
     }
     public void OnDashInput(bool isDashPressed = true)
     {
