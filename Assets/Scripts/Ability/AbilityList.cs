@@ -107,9 +107,7 @@ public class AbilityList : MonoBehaviour
         AbilityInstanceBase inst = AbilityInstances.Find(x => x.AbilityData == data);
 
         if (inst == null)
-        {
             return;
-        }
 
         UnEquip(inst);
     }
