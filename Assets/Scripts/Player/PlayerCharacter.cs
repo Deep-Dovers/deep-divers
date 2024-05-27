@@ -338,10 +338,10 @@ public class PlayerCharacter : NetworkBehaviour
         Debug.Log("moving" + value);
         m_movement = value;
 
-        if (Mathf.Abs(m_movement.x) > 0f)
+        /*if (Mathf.Abs(m_movement.x) > 0f)
         {
             m_animCmp.TransitToAnimationState(PlayerAnimationState.AnimationState.Walk);
-        }
+        }*/
     }
     public void OnDashInput(bool isDashPressed = true)
     {

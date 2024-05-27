@@ -29,7 +29,7 @@ public class PlayerAnimationState : MonoBehaviour
 
     public void TransitToAnimationState(AnimationState newState)
     {
-        if (newState == State || !m_animator)
+        if (/*newState == State ||*/ !m_animator)
             return;
 
         AnimationState currState = State;
@@ -49,8 +49,12 @@ public class PlayerAnimationState : MonoBehaviour
                 m_animator.speed = 2f;
                 break;
             case AnimationState.AttackUp:
+                m_animator.SetTrigger("AttackUp");
+                Invoke("ResetAttackTriggers", .5f);
                 break;
             case AnimationState.AttackDown:
+                m_animator.SetTrigger("AttackDown");
+                Invoke("ResetAttackTriggers", .5f);
                 break;
             case AnimationState.Dead:
                 m_animator.SetBool("IsMoving", false);
@@ -60,6 +64,12 @@ public class PlayerAnimationState : MonoBehaviour
                 break;
         }
 
-        State = currState;
+        State = newState;
+    }
+
+    private void ResetAttackTriggers()
+    {
+        m_animator.ResetTrigger("AttackUp");
+        m_animator.ResetTrigger("AttackDown");
     }
 }

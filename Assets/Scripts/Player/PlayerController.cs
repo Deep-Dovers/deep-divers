@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [Header("Character")]
     [SerializeField]
     public PlayerCharacter m_character;
+    public PlayerAnimationState m_charAnim;
 
     //event system/input
     [Header("Input")]
@@ -94,20 +95,27 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputValue value)
     {
-        Vector2 moveAxisVal = value.Get<Vector2>();
-        m_character.OnMoveInput(moveAxisVal);
+        Vector2 move = value.Get<Vector2>();
+        m_character.OnMoveInput(move);
+
+        m_charAnim.TransitToAnimationState(move != Vector2.zero ? PlayerAnimationState.AnimationState.Walk :
+            PlayerAnimationState.AnimationState.Idle);
     }
 
     public void OnDash()
     {
         print("DASH!!!");
         m_character.OnDashInput();
+
+        m_charAnim.TransitToAnimationState(PlayerAnimationState.AnimationState.Dash);
     }
 
     public void OnAttack()
     {
         print("attack!!!");
         m_character.OnAttackInput();
+
+        m_charAnim.TransitToAnimationState(PlayerAnimationState.AnimationState.AttackDown);
     }
     public void OnAbility1Triggered()
     {
@@ -134,5 +142,7 @@ public class PlayerController : MonoBehaviour
     {
         m_character = character;
         character.SetOwner(this);
+
+        m_charAnim = m_character.GetComponent<PlayerAnimationState>();
     }
 }
