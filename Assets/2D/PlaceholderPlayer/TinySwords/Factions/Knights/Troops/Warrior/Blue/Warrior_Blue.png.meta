@@ -619,9 +619,9 @@ TextureImporter:
       name: Warrior_Blue_SideAttack_3
       rect:
         serializedVersion: 2
-        x: 651
+        x: 616
         y: 1015
-        width: 110
+        width: 145
         height: 113
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -640,9 +640,9 @@ TextureImporter:
       name: Warrior_Blue_SideAttack_4
       rect:
         serializedVersion: 2
-        x: 841
+        x: 805
         y: 1012
-        width: 109
+        width: 145
         height: 94
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -661,9 +661,9 @@ TextureImporter:
       name: Warrior_Blue_SideAttack_5
       rect:
         serializedVersion: 2
-        x: 1026
+        x: 998
         y: 1015
-        width: 102
+        width: 130
         height: 91
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -684,7 +684,7 @@ TextureImporter:
         serializedVersion: 2
         x: 33
         y: 825
-        width: 84
+        width: 115
         height: 91
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -705,7 +705,7 @@ TextureImporter:
         serializedVersion: 2
         x: 223
         y: 823
-        width: 86
+        width: 118
         height: 91
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -724,9 +724,9 @@ TextureImporter:
       name: Warrior_Blue_SideAttackUp_2
       rect:
         serializedVersion: 2
-        x: 415
+        x: 414
         y: 823
-        width: 86
+        width: 118
         height: 91
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -745,9 +745,9 @@ TextureImporter:
       name: Warrior_Blue_SideAttackUp_3
       rect:
         serializedVersion: 2
-        x: 633
+        x: 588
         y: 813
-        width: 125
+        width: 170
         height: 102
       alignment: 7
       pivot: {x: 0.5, y: 0}
@@ -766,9 +766,9 @@ TextureImporter:
       name: Warrior_Blue_SideAttackUp_4
       rect:
         serializedVersion: 2
-        x: 826
+        x: 796
         y: 823
-        width: 126
+        width: 156
         height: 96
       alignment: 7
       pivot: {x: 0.5, y: 0}
