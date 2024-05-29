@@ -644,14 +644,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AiDummy
       objectReference: {fileID: 0}
-    - target: {fileID: 3556870547145539019, guid: 40db114a2ba713c41a1a3bb4e1c78263, type: 3}
-      propertyPath: m_TagString
-      value: Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 4310887456306846670, guid: 40db114a2ba713c41a1a3bb4e1c78263, type: 3}
-      propertyPath: m_BodyType
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8152480191532150918, guid: 40db114a2ba713c41a1a3bb4e1c78263, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.03
