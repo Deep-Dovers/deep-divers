@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Relic
   - FX
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -51,4 +52,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 3576162555
+    locked: 0
+  - name: Enemy
+    uniqueID: 3615141125
     locked: 0

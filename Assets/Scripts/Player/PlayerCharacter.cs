@@ -96,6 +96,9 @@ public class PlayerCharacter : NetworkBehaviour
 
     private float m_attackCDTimer;
     private bool m_isAttacking = false;
+    private Vector2 m_attackDirection;
+    private Vector3 m_mousePosition;
+    private Camera m_camera;
     #endregion
 
     [Space]
@@ -135,6 +138,7 @@ public class PlayerCharacter : NetworkBehaviour
         m_coyoteTimeCounter = m_fallingGravity;
         m_jumpCDTimer = m_jumpCooldown;
         m_dashCDTimer = m_dashCooldown;
+        m_camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
     private void Update()
     {
@@ -161,6 +165,10 @@ public class PlayerCharacter : NetworkBehaviour
             }
         }
         #endregion
+
+        m_mousePosition = m_camera.ScreenToWorldPoint(Input.mousePosition);
+        m_attackDirection  = m_mousePosition - transform.position;
+        m_attackDirection.Normalize();
     }
     // Anything that relates to physics is done here
     void FixedUpdate()
@@ -304,7 +312,7 @@ public class PlayerCharacter : NetworkBehaviour
     private void Attack()
     {
         //! need to do the get direction thing for now just take player's forward
-        m_abilities.MyFacing = FacingDir;
+        m_abilities.MyFacing = m_attackDirection;
 
         m_abilities.Execute();
     }
