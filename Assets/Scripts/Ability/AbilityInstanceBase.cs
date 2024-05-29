@@ -51,6 +51,11 @@ public class AbilityInstanceBase
     public UnityEvent<float> EOnAbilityCooldownUpdate { get; protected set; } = new();
     public UnityEvent<bool> EOnAbilityTriggered { get; protected set; } = new();
 
+    //bullet spawn stuff
+    public UnityEvent EOnBulletSpawn { get; protected set; } = new();
+    public UnityEvent EOnBulletImpact { get; protected set; } = new();
+
+    #region Constructor/Destructor
     public AbilityInstanceBase()
     {
         AbilityData = null;
@@ -75,6 +80,16 @@ public class AbilityInstanceBase
 
         CurrentCooldown = CooldownTime;
     }
+    ~AbilityInstanceBase()
+    {
+        EOnAbilityCooldownUpdate.RemoveAllListeners();
+        EOnAbilityTriggered.RemoveAllListeners();
+        EOnBulletSpawn.RemoveAllListeners();
+        EOnBulletImpact.RemoveAllListeners();
+
+        Modifiers.Clear();
+    }
+    #endregion
 
     public virtual void Execute(Vector3 myPos, Vector3 dir)
     {
@@ -90,26 +105,26 @@ public class AbilityInstanceBase
     {
         GameObject toSpawn = AbilityData ? AbilityData.SpawnObject : null;
 
-        if(!toSpawn)
+        if (!toSpawn)
         {
-            Debug.Log($"{ (AbilityData ? AbilityData.AbilityName : GetType().Name)} Missing bullet prefab");
+            Debug.Log($"{(AbilityData ? AbilityData.AbilityName : GetType().Name)} Missing bullet prefab");
+            return;
         }
 
         for (int i = 0; i < ProjectileCount; i++)
         {
-            if(toSpawn)
-            {
-                ProjectileBase p = GameObject.Instantiate(toSpawn, m_myPos, Quaternion.identity).GetComponent<ProjectileBase>();
+            ProjectileBase p = GameObject.Instantiate(toSpawn, m_myPos, Quaternion.identity).GetComponent<ProjectileBase>();
 
-                p.SetTravelDirection(m_abilityDir);
-                p.Setup(BulletDamage, BulletSpeed, BulletLifetime, BulletMaxTravelRange);
-            }
+            p.SetTravelDirection(m_abilityDir);
+            p.Setup(BulletDamage, BulletSpeed, BulletLifetime, BulletMaxTravelRange);
+
+            p.ApplyImpactModifiers(EOnBulletImpact);
         }
     }
 
     public virtual void ApplyModifiers()
     {
-        foreach(var mod in Modifiers)
+        foreach (var mod in Modifiers)
         {
             mod.ApplyModifier(this);
         }

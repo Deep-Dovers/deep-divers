@@ -17,8 +17,6 @@ public class Scriptable_ExplosionRelic : Scriptable_RelicBase
 
     public override void ApplyToPlayer(GameObject player)
     {
-        Debug.Log("EKSUPLOSION");
-
         //apply modifier here
         base.ApplyToPlayer(player);
     }
