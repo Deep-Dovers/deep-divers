@@ -18,18 +18,23 @@ public class BaseEnemyBehaviour : MonoBehaviour
     private float m_curHP;
     //! Temp solution to show enemy hp
     public TextMesh m_textMesh;
+
+    public float DetectionRange;
+    private bool hasLineOfSight = false;
     // Start is called before the first frame update
     void Start()
     {
         m_curHP = m_Hp; 
     }
-
     // Update is called once per frame
     void Update()
     {
 
     }
-
+    private void FixedUpdate()
+    {
+        
+    }
     public void DealDamage(float dmg)
     {
         m_curHP -= dmg;
