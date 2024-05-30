@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_speed: 20
-  m_damageValue: 1
+  m_damageValue: 10
   m_lifeTime: 100
   m_range: 100
   m_direction: {x: 0, y: 0, z: 0}
