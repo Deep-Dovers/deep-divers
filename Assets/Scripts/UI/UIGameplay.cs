@@ -2,7 +2,7 @@ using UI;
 using UnityEngine;
 using TMPro;
 
-public class UIGameplay : MonoBehaviour
+public class UIGameplay : UIWindow
 {
     [SerializeField]
     private AbilityList m_abilities;
