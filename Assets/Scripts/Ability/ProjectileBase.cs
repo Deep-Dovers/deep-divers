@@ -27,7 +27,7 @@ public class ProjectileBase : MonoBehaviour
 
     //events
     public UnityEvent EOnSpawn { get; private set; } = new();
-    public UnityEvent EOnImpact { get; private set; } = new();
+    public UnityEvent<Vector3> EOnImpact { get; private set; } = new();
 
     private void OnDestroy()
     {
@@ -59,11 +59,11 @@ public class ProjectileBase : MonoBehaviour
             return;
 
         //!Temp
-        var go = Instantiate(m_impactPrefab, transform.position, Quaternion.identity);
+        /*var go = Instantiate(m_impactPrefab, transform.position, Quaternion.identity);
 
-        Destroy(go, .9f);
+        Destroy(go, .9f);*/
 
-        EOnImpact?.Invoke();
+        EOnImpact?.Invoke(transform.position);
 
         if(++m_currPenCount >= MaxPenCount)
             Destroy(gameObject);
@@ -83,8 +83,9 @@ public class ProjectileBase : MonoBehaviour
         m_direction = direction;
     }
 
-    public void ApplyImpactModifiers(UnityEvent e)
+    public void ApplyImpactModifiers(UnityEvent<Vector3> e)
     {
+        //this is a reference which causes problems
         EOnImpact = e;
     }
 }
