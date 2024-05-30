@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     private PlayerInput m_pInputControls;
     private MultiplayerEventSystem m_eventSystem;
 
+    private UIRelicInventoryWindow m_inventoryWindow;
+
     private void OnValidate()
     {
         m_pInputControls = GetComponentInChildren<PlayerInput>();
@@ -131,6 +133,14 @@ public class PlayerController : MonoBehaviour
     {
         print("a3!!!");
         //m_character.OnAttackInput();
+    }
+
+    public void OnOpenInventory()
+    {
+        if (!m_inventoryWindow)
+            m_inventoryWindow = FindFirstObjectByType<UIRelicInventoryWindow>(FindObjectsInactive.Include);
+
+        m_inventoryWindow.ToggleWindow();
     }
     #endregion
 

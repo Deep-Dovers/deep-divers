@@ -1,4 +1,5 @@
 using AssetUsageDetectorNamespace;
+using Mono.CSharp;
 using NaughtyAttributes;
 using Relics;
 using System.Collections;
@@ -154,7 +155,7 @@ public class AbilityList : MonoBehaviour
         }
         if (AbilityInstances.Count > ind)
         {
-            AbilityInstances[ind].Execute(transform.position, MyFacing);
+            AbilityInstances[ind].Execute(transform.position, MyFacing, ref Mods);
             InitiateCooldown(ind);
         }
         else

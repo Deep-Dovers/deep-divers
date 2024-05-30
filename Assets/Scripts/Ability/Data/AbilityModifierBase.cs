@@ -41,8 +41,22 @@ public class AbilityModifierBase : ScriptableObject
     /// i.e adding damage, etc
     /// </summary>
     /// <param name="modTo">the target</param>
-    public void ApplyModifier(in AbilityInstanceBase modTo)
+    public virtual void ApplyModifier(in AbilityInstanceBase modTo)
     {
-
+        switch (ModifyType)
+        {
+            case EModifyType.Add:
+                break;
+            case EModifyType.Subtract:
+                break;
+            case EModifyType.Multiply:
+                break;
+            case EModifyType.Set:
+                break;
+            case EModifyType.Event:
+                break;
+            default:
+                break;
+        }
     }
 }

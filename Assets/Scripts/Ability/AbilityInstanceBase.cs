@@ -14,9 +14,6 @@ public class AbilityInstanceBase
     // Type
     public Relics.RelicSkillTypes Type;
 
-    // Modifiers
-    public List<AbilityModifierBase> Modifiers = new();
-
     // VALUES THAT CAN BE MODIFIED BY MODIFIERS
     public AbilityData AbilityData { get; private set; }
     //declare here so that it can be modified by modifiers
@@ -53,7 +50,7 @@ public class AbilityInstanceBase
 
     //bullet spawn stuff
     public UnityEvent EOnBulletSpawn { get; protected set; } = new();
-    public UnityEvent EOnBulletImpact { get; protected set; } = new();
+    public UnityEvent<Vector3> EOnBulletImpact { get; protected set; } = new();
 
     #region Constructor/Destructor
     public AbilityInstanceBase()
@@ -86,19 +83,21 @@ public class AbilityInstanceBase
         EOnAbilityTriggered.RemoveAllListeners();
         EOnBulletSpawn.RemoveAllListeners();
         EOnBulletImpact.RemoveAllListeners();
-
-        Modifiers.Clear();
     }
     #endregion
 
-    public virtual void Execute(Vector3 myPos, Vector3 dir)
+    public virtual void Execute(Vector3 myPos, Vector3 dir, ref List<AbilityModifierBase> Modifiers)
     {
         m_myPos = myPos;
         m_abilityDir = dir;
 
-        ApplyModifiers();
+        ApplyModifiers(ref Modifiers);
         EOnAbilityTriggered?.Invoke(true);
         SpawnBullets();
+
+        //clean up
+        EOnBulletSpawn.RemoveAllListeners();
+        EOnBulletImpact.RemoveAllListeners();
     }
 
     public virtual void SpawnBullets()
@@ -122,7 +121,7 @@ public class AbilityInstanceBase
         }
     }
 
-    public virtual void ApplyModifiers()
+    public virtual void ApplyModifiers(ref List<AbilityModifierBase> Modifiers)
     {
         foreach (var mod in Modifiers)
         {
