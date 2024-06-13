@@ -83,11 +83,7 @@ public class AbilityInstanceBase
         EOnAbilityTriggered.RemoveAllListeners();
         EOnBulletSpawn.RemoveAllListeners();
 
-        for (int i = EOnBulletImpact.GetInvocationList().Length - 1; i >= 0; i--)
-        {
-            EOnBulletImpact -= EOnBulletImpact.GetInvocationList()[i] as
-                System.Action<Vector3>;
-        }
+        Utils.SystemActionUtils.ClearEvent(EOnBulletImpact);
     }
     #endregion
 
@@ -103,11 +99,7 @@ public class AbilityInstanceBase
         //clean up
         EOnBulletSpawn.RemoveAllListeners();
 
-        for (int i = EOnBulletImpact.GetInvocationList().Length - 1; i >= 0; i--)
-        {
-            EOnBulletImpact -= EOnBulletImpact.GetInvocationList()[i] as
-                System.Action<Vector3>;
-        }
+        Utils.SystemActionUtils.ClearEvent(EOnBulletImpact);
     }
 
     public virtual void SpawnBullets()

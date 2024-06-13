@@ -31,11 +31,7 @@ public class ProjectileBase : MonoBehaviour
 
     private void OnDestroy()
     {
-        for (int i = EOnImpact.GetInvocationList().Length - 1; i >= 0; i--)
-        {
-            EOnImpact -= EOnImpact.GetInvocationList()[i] as
-                System.Action<Vector3>;
-        }
+        Utils.SystemActionUtils.ClearEvent(EOnImpact);
     }
 
     // Update is called once per frame
