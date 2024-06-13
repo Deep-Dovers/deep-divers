@@ -46,12 +46,14 @@ namespace Relics
                 return;
             }
 
-            //equip to player
+            //equip to player, ignore non player
             if (collision.CompareTag("Player"))
+            {
                 m_data.ApplyToPlayer(collision.gameObject);
 
-            //delete self
-            Destroy(gameObject);
+                //delete self
+                Destroy(gameObject);
+            }
         }
     }
 }

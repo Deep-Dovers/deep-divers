@@ -27,11 +27,15 @@ public class ProjectileBase : MonoBehaviour
 
     //events
     public UnityEvent EOnSpawn { get; private set; } = new();
-    public UnityEvent<Vector3> EOnImpact { get; private set; } = new();
+    public System.Action<Vector3> EOnImpact { get; private set; }
 
     private void OnDestroy()
     {
-        EOnImpact.RemoveAllListeners();
+        for (int i = EOnImpact.GetInvocationList().Length - 1; i >= 0; i--)
+        {
+            EOnImpact -= EOnImpact.GetInvocationList()[i] as
+                System.Action<Vector3>;
+        }
     }
 
     // Update is called once per frame
@@ -41,8 +45,8 @@ public class ProjectileBase : MonoBehaviour
         transform.position += m_direction * m_speed * Time.deltaTime;
         //! range check
         var deltaVec = transform.position - m_startingposition;
-        print(deltaVec.magnitude);
-        if (deltaVec.magnitude >= m_range) 
+
+        if (deltaVec.sqrMagnitude >= (m_range * m_range))
         {
             Destroy(gameObject);
         }
@@ -65,7 +69,7 @@ public class ProjectileBase : MonoBehaviour
 
         EOnImpact?.Invoke(transform.position);
 
-        if(++m_currPenCount >= MaxPenCount)
+        if (++m_currPenCount >= MaxPenCount)
             Destroy(gameObject);
     }
 
@@ -83,9 +87,17 @@ public class ProjectileBase : MonoBehaviour
         m_direction = direction;
     }
 
-    public void ApplyImpactModifiers(UnityEvent<Vector3> e)
+
+    public void ApplyImpactModifiers(System.Action<Vector3> e)
     {
-        //this is a reference which causes problems
-        EOnImpact = e;
+        if (e == null)
+            return;
+
+        //EOnImpact = e.Clone() as System.Action<Vector3>;
+        for (int i = 0; i < e.GetInvocationList().Length; i++)
+        {
+            EOnImpact += e.GetInvocationList()[i] as
+                System.Action<Vector3>;
+        }
     }
 }

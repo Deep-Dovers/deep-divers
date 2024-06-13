@@ -50,7 +50,7 @@ public class AbilityInstanceBase
 
     //bullet spawn stuff
     public UnityEvent EOnBulletSpawn { get; protected set; } = new();
-    public UnityEvent<Vector3> EOnBulletImpact { get; protected set; } = new();
+    public System.Action<Vector3> EOnBulletImpact;
 
     #region Constructor/Destructor
     public AbilityInstanceBase()
@@ -82,7 +82,12 @@ public class AbilityInstanceBase
         EOnAbilityCooldownUpdate.RemoveAllListeners();
         EOnAbilityTriggered.RemoveAllListeners();
         EOnBulletSpawn.RemoveAllListeners();
-        EOnBulletImpact.RemoveAllListeners();
+
+        for (int i = EOnBulletImpact.GetInvocationList().Length - 1; i >= 0; i--)
+        {
+            EOnBulletImpact -= EOnBulletImpact.GetInvocationList()[i] as
+                System.Action<Vector3>;
+        }
     }
     #endregion
 
@@ -97,7 +102,12 @@ public class AbilityInstanceBase
 
         //clean up
         EOnBulletSpawn.RemoveAllListeners();
-        EOnBulletImpact.RemoveAllListeners();
+
+        for (int i = EOnBulletImpact.GetInvocationList().Length - 1; i >= 0; i--)
+        {
+            EOnBulletImpact -= EOnBulletImpact.GetInvocationList()[i] as
+                System.Action<Vector3>;
+        }
     }
 
     public virtual void SpawnBullets()
