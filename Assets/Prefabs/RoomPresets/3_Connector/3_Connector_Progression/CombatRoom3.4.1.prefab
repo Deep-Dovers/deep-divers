@@ -17958,7 +17958,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4654887546636818538, guid: 854ef829196a2ea46be2699d64144028, type: 3}
       propertyPath: m_Name
-      value: PassthroughMap_Preset3.4.1
+      value: PassthroughMap
       objectReference: {fileID: 0}
     - target: {fileID: 4748972506653911542, guid: 854ef829196a2ea46be2699d64144028, type: 3}
       propertyPath: m_ChunkCullingBounds.x
@@ -17982,7 +17982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7528547270131128508, guid: 854ef829196a2ea46be2699d64144028, type: 3}
       propertyPath: m_Name
-      value: SolidMap_Preset3.4.1
+      value: SolidMap
       objectReference: {fileID: 0}
     - target: {fileID: 9212163530706651939, guid: 854ef829196a2ea46be2699d64144028, type: 3}
       propertyPath: m_Name

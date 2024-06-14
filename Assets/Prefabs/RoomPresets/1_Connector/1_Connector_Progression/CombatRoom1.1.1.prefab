@@ -14398,7 +14398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6178577719715628344, guid: 859d66aa273d7764abed3e213fcbc59e, type: 3}
       propertyPath: m_Name
-      value: SolidMap_Preset1.1.1
+      value: SolidMap
       objectReference: {fileID: 0}
     - target: {fileID: 6382319601723989129, guid: 859d66aa273d7764abed3e213fcbc59e, type: 3}
       propertyPath: m_ChunkCullingBounds.x
@@ -14422,7 +14422,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9033387312775513582, guid: 859d66aa273d7764abed3e213fcbc59e, type: 3}
       propertyPath: m_Name
-      value: PassthroughMap_Preset1.1.1
+      value: PassthroughMap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

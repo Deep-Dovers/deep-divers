@@ -21542,7 +21542,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6858372425831987029, guid: c532bd02087b60e448ff613c06f34b50, type: 3}
       propertyPath: m_Name
-      value: SolidMap_Preset3.3.1
+      value: SolidMap
       objectReference: {fileID: 0}
     - target: {fileID: 7749371572990494551, guid: c532bd02087b60e448ff613c06f34b50, type: 3}
       propertyPath: m_Name
@@ -21558,7 +21558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8632955421348788099, guid: c532bd02087b60e448ff613c06f34b50, type: 3}
       propertyPath: m_Name
-      value: PassthroughMap_Preset3.3.1
+      value: PassthroughMap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

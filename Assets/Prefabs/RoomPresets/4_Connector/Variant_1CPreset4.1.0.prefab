@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1575199612994448402, guid: 95972a022bca8614384b3e2744d7732b, type: 3}
       propertyPath: m_Name
-      value: SolidMap_Preset4.1.0
+      value: SolidMap
       objectReference: {fileID: 0}
     - target: {fileID: 2412419439376636944, guid: 95972a022bca8614384b3e2744d7732b, type: 3}
       propertyPath: m_Name
@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4413393386872483012, guid: 95972a022bca8614384b3e2744d7732b, type: 3}
       propertyPath: m_Name
-      value: PassthroughMap_Preset4.1.0
+      value: PassthroughMap
       objectReference: {fileID: 0}
     - target: {fileID: 7138516177676545780, guid: 95972a022bca8614384b3e2744d7732b, type: 3}
       propertyPath: m_LocalPosition.x
