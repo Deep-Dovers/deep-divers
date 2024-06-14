@@ -12,7 +12,7 @@ public class ExplosionModifier : AbilityModifierBase
 
     public override void ApplyModifier(in AbilityInstanceBase modTo)
     {
-        modTo.EOnBulletImpact.AddListener(OnBulletImpact);
+        modTo.EOnBulletImpact += OnBulletImpact;
     }
 
     private void OnBulletImpact(Vector3 spawnPos)
