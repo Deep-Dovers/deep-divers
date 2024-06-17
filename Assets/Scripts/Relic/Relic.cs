@@ -37,6 +37,15 @@ namespace Relics
             m_relicRarity = relicRarity;
         }
 
+        /// <summary>
+        /// Upgrades existing relic
+        /// </summary>
+        /// <param name="incBy">Rank/Tier to increase by</param>
+        public void UpgradeRelic(int incBy = 1)
+        {
+
+        }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if(!m_data)
@@ -49,6 +58,16 @@ namespace Relics
             //equip to player, ignore non player
             if (collision.CompareTag("Player"))
             {
+                var player = collision.gameObject.GetComponent<PlayerCharacter>();
+
+                if(player)
+                {
+                    var inv = player.Owner.GetComponent<RelicInventory>();
+
+                    if(inv)
+                        inv.AddRelic(this);
+                }
+
                 m_data.ApplyToPlayer(collision.gameObject);
 
                 //delete self

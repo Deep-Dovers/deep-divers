@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 620359594981704960}
   - component: {fileID: 4161844686041709620}
   - component: {fileID: 6826934911146926131}
+  - component: {fileID: 6815860859141095756}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -48,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <PlayerIndex>k__BackingField: -1
   m_character: {fileID: 0}
+  m_charAnim: {fileID: 0}
   m_pInputControls: {fileID: 6826934911146926131}
 --- !u!114 &6826934911146926131
 MonoBehaviour:
@@ -140,9 +142,21 @@ MonoBehaviour:
     m_ActionName: 'Gameplay/Jump[/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 973fa59c-157e-40c2-b717-65dc8bdc8854
+  m_DefaultActionMap: Start
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &6815860859141095756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1516846206530416940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9fcbeb1ddbb6a428e8fa24af4c6805, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4353593985377793100
 GameObject:
   m_ObjectHideFlags: 0
