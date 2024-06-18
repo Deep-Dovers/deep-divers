@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UI;
 using UnityEngine;
 using UnityEngine.Events;
@@ -100,6 +101,8 @@ public class AbilityInstanceBase
         EOnBulletSpawn.RemoveAllListeners();
 
         Utils.SystemActionUtils.ClearEvent(EOnBulletImpact);
+        Debug.Log(EOnBulletImpact.GetInvocationList().Count());
+        EOnBulletImpact = null;
     }
 
     public virtual void SpawnBullets()
