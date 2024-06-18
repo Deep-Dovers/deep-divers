@@ -7,18 +7,19 @@ namespace Relics
     /// <summary>
     /// This class is for the one in the inventory
     /// </summary>
-    public class RelicInventoryItem : MonoBehaviour
+    public class RelicInventoryItem
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        public Scriptable_RelicBase Data { get; private set; }
+        public RelicRarity Rarity { get; private set; }
 
+        public void SetData(Scriptable_RelicBase data)
+        {
+            Data = data;
         }
 
-        // Update is called once per frame
-        void Update()
+        public void SetRarity(RelicRarity rarity)
         {
-
+            Rarity = rarity;
         }
     }
 }

@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class RelicInventory : MonoBehaviour
 {
-    [SerializeField]
-    private List<Relic> m_relicsOwned = new List<Relic>();
-    public List<Relic> RelicsOwned => m_relicsOwned;
-    public List<RelicInventoryItem> RelicsOwned2 = new();
+    public List<RelicInventoryItem> m_relicsOwned = new();
+    public List<RelicInventoryItem> RelicsOwned => m_relicsOwned;
 
     [Header("UI")]
     [SerializeField]
+    private UIRelicInventoryWindow m_windowPrefab;
     private UIRelicInventoryWindow m_window;
 
     void Awake()
@@ -19,23 +18,43 @@ public class RelicInventory : MonoBehaviour
         
     }
 
-    private Relic DoesRelicExist(Relic r)
+    public void ToggleWindow()
     {
-        return m_relicsOwned.Find(x => x == r);
+        if (!m_window)
+            m_window = Instantiate(m_windowPrefab, Vector3.zero, Quaternion.identity);
+
+        m_window.ToggleWindow();
+    }
+
+    private RelicInventoryItem DoesRelicExist(Relic r)
+    {
+        return m_relicsOwned.Find(x => x.Data == r.Data);
     }
 
     public void AddRelic(Relic relic)
     {
-        if(!DoesRelicExist(relic))
-            m_relicsOwned.Add(relic);
+        if (DoesRelicExist(relic) == null)
+        {
+            RelicInventoryItem newItem = new RelicInventoryItem();
+            newItem.SetData(relic.Data);
+            newItem.SetRarity(relic.RelicRarity);
+
+            m_relicsOwned.Add(newItem);
+
+            m_window?.UpdateRelicList(RelicsOwned);
+        }
     }
 
     public void RemoveRelic(Relic relic)
     {
-        Relic r = DoesRelicExist(relic);
+        RelicInventoryItem r = DoesRelicExist(relic);
 
-        if (r)
-            m_relicsOwned.Remove(relic);
+        if (r != null)
+        {
+            m_relicsOwned.Remove(r);
+
+            m_window?.UpdateRelicList(RelicsOwned);
+        }
     }
 
     public void UpgradeRelic(int id)
