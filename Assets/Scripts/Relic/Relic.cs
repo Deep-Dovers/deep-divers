@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Relics
 {
+    /// <summary>
+    /// This is the class for the in world relic, the collectable
+    /// </summary>
     public class Relic : MonoBehaviour
     {
         private SpriteRenderer m_spRender;
@@ -14,8 +17,10 @@ namespace Relics
 
         [SerializeField, Expandable]
         private Scriptable_RelicBase m_data;
+        public Scriptable_RelicBase Data => m_data;
         [SerializeField]
         private RelicRarity m_relicRarity;
+        public RelicRarity RelicRarity => m_relicRarity;
 
         private void Awake()
         {

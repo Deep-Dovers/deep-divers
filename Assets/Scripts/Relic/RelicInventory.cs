@@ -8,6 +8,7 @@ public class RelicInventory : MonoBehaviour
     [SerializeField]
     private List<Relic> m_relicsOwned = new List<Relic>();
     public List<Relic> RelicsOwned => m_relicsOwned;
+    public List<RelicInventoryItem> RelicsOwned2 = new();
 
     [Header("UI")]
     [SerializeField]

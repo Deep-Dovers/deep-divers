@@ -157,6 +157,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e9fcbeb1ddbb6a428e8fa24af4c6805, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_relicsOwned: []
+  RelicsOwned2: []
+  m_window: {fileID: 3365223522396886532, guid: 76e89e1f6458ecf48b928aed5d155201, type: 3}
 --- !u!1 &4353593985377793100
 GameObject:
   m_ObjectHideFlags: 0
