@@ -44,6 +44,8 @@ namespace Utils
                 {
                     e -= (System.Action<T>)list[i];
                 }
+
+                e = null;
             }
         }
 

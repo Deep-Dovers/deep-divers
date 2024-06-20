@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using Relics;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,8 +6,11 @@ using UnityEngine;
 
 public class RelicInventory : MonoBehaviour
 {
+    [SerializeField]
     public List<RelicInventoryItem> m_relicsOwned = new();
     public List<RelicInventoryItem> RelicsOwned => m_relicsOwned;
+    [SerializeField, ReadOnly]
+    public int Count = 0; //debug
 
     [Header("UI")]
     [SerializeField]
@@ -15,14 +19,14 @@ public class RelicInventory : MonoBehaviour
 
     void Awake()
     {
-        
+        if (!m_window)
+            m_window = Instantiate(m_windowPrefab, Vector3.zero, Quaternion.identity);
+
+        m_window.Close();
     }
 
     public void ToggleWindow()
     {
-        if (!m_window)
-            m_window = Instantiate(m_windowPrefab, Vector3.zero, Quaternion.identity);
-
         m_window.ToggleWindow();
     }
 
@@ -43,6 +47,8 @@ public class RelicInventory : MonoBehaviour
 
             m_window?.UpdateRelicList(RelicsOwned);
         }
+
+        Count = m_relicsOwned.Count;
     }
 
     public void RemoveRelic(Relic relic)
@@ -55,6 +61,8 @@ public class RelicInventory : MonoBehaviour
 
             m_window?.UpdateRelicList(RelicsOwned);
         }
+
+        Count = m_relicsOwned.Count;
     }
 
     public void UpgradeRelic(int id)

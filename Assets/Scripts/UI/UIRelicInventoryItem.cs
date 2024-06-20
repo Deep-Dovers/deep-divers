@@ -39,6 +39,8 @@ public class UIRelicInventoryItem : MonoBehaviour
 
     private void Awake()
     {
+        m_animator = GetComponent<Animator>();
+
         //if(m_hoverFrame)
         //    m_hoverFrame.gameObject.SetActive(false);
 
@@ -74,6 +76,6 @@ public class UIRelicInventoryItem : MonoBehaviour
 
     public void OnClick()
     {
-        m_animator.Play("Pressed");
+        //m_animator.Play("Pressed");
     }
 }
