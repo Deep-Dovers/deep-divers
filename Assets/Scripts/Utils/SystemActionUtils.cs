@@ -38,7 +38,7 @@ namespace Utils
             if (e != null)
             {
                 System.Delegate[] list = e.GetInvocationList();
-                UnityEngine.Debug.Log(e.GetInvocationList().Length);
+                //UnityEngine.Debug.Log(e.GetInvocationList().Length);
 
                 for (int i = list.Length -1; i >= 0; i--)
                 {
