@@ -29,7 +29,7 @@ public class UIRelicInventoryWindow : UIWindow
     {
         m_closeBtn?.onClick.AddListener(Close);
 
-        UpdateRelicList(null);
+        //UpdateRelicList(null);
     }
 
     private void OnDestroy()
