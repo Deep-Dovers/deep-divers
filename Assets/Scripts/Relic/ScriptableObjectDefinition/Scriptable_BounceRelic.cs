@@ -7,6 +7,8 @@ using UnityEngine;
 menuName = "Scriptable Objects/Relic/Bounce Relic", order = 0)]
 public class Scriptable_BounceRelic : Scriptable_RelicBase
 {
+    public int BounceTime = 1;
+
     public override void ApplyToPlayer(GameObject player)
     {
         Debug.Log("bouncy boi");

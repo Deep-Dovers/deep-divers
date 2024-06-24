@@ -101,7 +101,7 @@ public class AbilityInstanceBase
         EOnBulletSpawn.RemoveAllListeners();
 
         Utils.SystemActionUtils.ClearEvent(EOnBulletImpact);
-        Debug.Log(EOnBulletImpact.GetInvocationList().Count());
+        Debug.Log(EOnBulletImpact?.GetInvocationList().Count());
         EOnBulletImpact = null;
     }
 

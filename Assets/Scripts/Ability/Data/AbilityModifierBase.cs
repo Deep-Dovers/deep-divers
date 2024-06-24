@@ -24,8 +24,10 @@ public class AbilityModifierBase : ScriptableObject
         BulletDamage,
         BulletSpeed,
         BulletBounce,       //how many times can it bounce before it dies
+        BulletPenetration,  //how many enemies can the bullet hit before it expires
         BulletImpact,       //what happens on impact
         BulletSpawn,        //what happens on spawn
+        BulletEndLIfe,      //what happens on end of lifetime WITHOUT impact
     }
 
     public EModifyType ModifyType = EModifyType.Add;

@@ -7,10 +7,11 @@ using UnityEngine;
 menuName = "Scriptable Objects/Relic/Penetration Relic", order = 2)]
 public class Scriptable_PenetrationRelic : Scriptable_RelicBase
 {
+    [Tooltip("This gets added on to the initial 1 hit, so 1 would be +1")]
+    public int PenetrationAmt = 1;
+    
     public override void ApplyToPlayer(GameObject player)
     {
-        Debug.Log("penetration");
-
         //apply modifier here
         base.ApplyToPlayer(player);
     }
