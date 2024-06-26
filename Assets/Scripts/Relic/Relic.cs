@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Relics
 {
+    /// <summary>
+    /// This is the class for the in world relic, the collectable
+    /// </summary>
     public class Relic : MonoBehaviour
     {
         private SpriteRenderer m_spRender;
@@ -14,8 +17,10 @@ namespace Relics
 
         [SerializeField, Expandable]
         private Scriptable_RelicBase m_data;
+        public Scriptable_RelicBase Data => m_data;
         [SerializeField]
         private RelicRarity m_relicRarity;
+        public RelicRarity RelicRarity => m_relicRarity;
 
         private void Awake()
         {
@@ -37,6 +42,15 @@ namespace Relics
             m_relicRarity = relicRarity;
         }
 
+        /// <summary>
+        /// Upgrades existing relic
+        /// </summary>
+        /// <param name="incBy">Rank/Tier to increase by</param>
+        public void UpgradeRelic(int incBy = 1)
+        {
+
+        }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if(!m_data)
@@ -49,6 +63,16 @@ namespace Relics
             //equip to player, ignore non player
             if (collision.CompareTag("Player"))
             {
+                var player = collision.gameObject.GetComponent<PlayerCharacter>();
+
+                if(player)
+                {
+                    var inv = player.Owner.GetComponent<RelicInventory>();
+
+                    if(inv)
+                        inv.AddRelic(this);
+                }
+
                 m_data.ApplyToPlayer(collision.gameObject);
 
                 //delete self

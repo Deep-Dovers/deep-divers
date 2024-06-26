@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     private PlayerInput m_pInputControls;
     private MultiplayerEventSystem m_eventSystem;
 
-    private UIRelicInventoryWindow m_inventoryWindow;
+    private RelicInventory m_inventory;
 
     private void OnValidate()
     {
@@ -137,10 +137,10 @@ public class PlayerController : MonoBehaviour
 
     public void OnOpenInventory()
     {
-        if (!m_inventoryWindow)
-            m_inventoryWindow = FindFirstObjectByType<UIRelicInventoryWindow>(FindObjectsInactive.Include);
+        if (!m_inventory)
+            m_inventory = GetComponent<RelicInventory>();
 
-        m_inventoryWindow.ToggleWindow();
+        m_inventory.ToggleWindow();
     }
     #endregion
 

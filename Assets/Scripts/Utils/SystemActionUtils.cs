@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Utils
 {
     /// <summary>
@@ -36,11 +38,14 @@ namespace Utils
             if (e != null)
             {
                 System.Delegate[] list = e.GetInvocationList();
+                //UnityEngine.Debug.Log(e.GetInvocationList().Length);
 
-                for (int i = 0; i < list.Length; i++)
+                for (int i = list.Length -1; i >= 0; i--)
                 {
                     e -= (System.Action<T>)list[i];
                 }
+
+                e = null;
             }
         }
 
