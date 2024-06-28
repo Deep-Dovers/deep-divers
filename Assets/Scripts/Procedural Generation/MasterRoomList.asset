@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea42c47fd7ea3ca4ea47c4d5ed050135, type: 3}
+  m_Name: MasterRoomList
+  m_EditorClassIdentifier: 
+  SetName: Set01
+  LevelRoomGenLimit: {x: 7, y: 15}
+  EntryRooms:
+  - {fileID: 6616080197670282993, guid: a68a5296c4b3b034187e32c3ffaacbf7, type: 3}
+  - {fileID: 6616080197670282993, guid: 92129a5d3642d3d4e9ec93cae2217266, type: 3}
+  - {fileID: 6613942087091704613, guid: c08103e7e9f83874582bd8e710502403, type: 3}
+  - {fileID: 6613942087091704613, guid: 56eb20e11dc5a944d8913564f4473fd3, type: 3}
+  - {fileID: 3321308337609074706, guid: 677d56c6fa22dac48a6a4e2a9248a081, type: 3}
+  - {fileID: 3321308337609074706, guid: e715185461d66584a92a081a16035026, type: 3}
+  - {fileID: 5034587197078462627, guid: c01cfca7a41d9fd48b252aca7fee924c, type: 3}
+  - {fileID: 5034587197078462627, guid: 0f847d739c66e7f48a5bef05ee89d5ea, type: 3}
+  ExitRooms:
+  - {fileID: 6616080197670282993, guid: 155b2982c7b67a144b4884641e11a31c, type: 3}
+  - {fileID: 6616080197670282993, guid: 2fa33c86aae98cd49bbf198b61cc20ec, type: 3}
+  - {fileID: 6613942087091704613, guid: 9ac8ab18e0a85aa48bcf63065989f1c2, type: 3}
+  - {fileID: 2190391026661205090, guid: 15369cc67f3608147b1965e8f67bd6c4, type: 3}
+  - {fileID: 3321308337609074706, guid: 25619128059ded5428a8ae077e56c72b, type: 3}
+  - {fileID: 3321308337609074706, guid: 5c0fa5e3394a8194a9aa348674ca35bb, type: 3}
+  - {fileID: 5034587197078462627, guid: 6d7ba421ead5a874386aa2302fb85ca5, type: 3}
+  - {fileID: 1780694938646091149, guid: 9f92832c282afed4889ecc832dd6a0d1, type: 3}
+  ProgRooms: []
+  MinProgRoomClear: {x: 1, y: 1}
+  UseRandomBetweenMinMax: 0
+  GambleRooms: []
+  UseMiscRoom: 0
+  MiscRooms: []

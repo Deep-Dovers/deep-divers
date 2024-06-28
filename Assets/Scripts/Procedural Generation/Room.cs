@@ -1,12 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 
 public enum ROOM_TYPE
 {
-    NORMAL = 0
+    ENTRY = 0,
+    COMBAT,
+    GAUNTLET,
+    GAMBLE,
+    MISC,
+    EXIT
 }
 
 public class Room 
@@ -15,7 +17,7 @@ public class Room
     public ROOM_TYPE m_roomType;
     //using byte
     public bool m_doorUp, m_doorDown, m_doorLeft, m_doorRight;
-    public Room(Vector2 gridPos, ROOM_TYPE roomType)
+    public Room(Vector2Int gridPos, ROOM_TYPE roomType)
 	{
 		m_gridPos   = gridPos;
 		m_roomType  = roomType;
