@@ -30,6 +30,8 @@ public class PlayerCharacter : NetworkBehaviour
     private float m_velPow = 0.9f;
     [SerializeField, Range(0, 1), Tooltip("Increase the value if u want the player to not slide so much when stopping")]
     private float m_frictionValue = 0.2f;
+    [SerializeField, Tooltip("Audio Clip: Walking SFX")]
+    private AudioClip walkingSFXClip;
 
     private Vector2 m_movement;
     private Vector2 m_currentVelocity;   //! for debugging 
@@ -61,6 +63,8 @@ public class PlayerCharacter : NetworkBehaviour
     private float castDistance;
     [SerializeField, Tooltip("The layer that the player will perform a ground check when the cast hits")]
     private LayerMask GroundLayer;
+    [SerializeField, Tooltip("Audio Clip: Jumping SFX")]
+    private AudioClip jumpingSFXClip;
 
     private bool m_isGrounded;
     private int m_jumpCount = 0;
@@ -221,6 +225,7 @@ public class PlayerCharacter : NetworkBehaviour
         m_rb.velocityY = m_jumpForce;  //! setting the velocity seems to feel better should show desinger both implementation
         m_jumpCount++;
         m_isJumping = true;
+        SFXManager.instance.PlaySFXClip(jumpingSFXClip, transform, 1f);
     }
     private void JumpCut()
     {
