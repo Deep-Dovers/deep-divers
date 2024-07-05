@@ -53,9 +53,12 @@ public class ProjectileBase : MonoBehaviour
         if (collision.CompareTag("Player") || collision.CompareTag("FX"))
             return;
 
-        if(collision.CompareTag("Enemy"))
+        Debug.Log("Hit" + collision.name);
+
+        if (collision.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<BaseEnemyBehaviour>().DealDamage(m_damageValue);
+            Debug.Log("Hit" + collision.name);
         }
 
         //!Temp

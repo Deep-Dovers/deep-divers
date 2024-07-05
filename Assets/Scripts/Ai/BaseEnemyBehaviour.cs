@@ -1,5 +1,7 @@
 using NUnit.Framework;
 using Pathfinding;
+using Relics;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseEnemyBehaviour : MonoBehaviour
@@ -30,6 +32,12 @@ public class BaseEnemyBehaviour : MonoBehaviour
 
     [SerializeField]
     Transform[] m_patrolPath;
+
+    [SerializeField]
+    List<RelicLootDrop> LootList;
+
+    [SerializeField]
+    GameObject m_relicPrefab;
 
     Path m_path;
     Seeker m_seeker;
@@ -74,11 +82,19 @@ public class BaseEnemyBehaviour : MonoBehaviour
     public virtual void Kill()
     {
         m_textMesh.color = Color.red;
-        m_textMesh.text = "I think i died";
+        dropLoot();
         Destroy(gameObject, 2f);
     }
     public void UpdateAiState()
     {
 
+    }
+    public void dropLoot()
+    {
+        m_textMesh.text = "Dropping Loot";
+        //LootTableRefs.GetRandomRelics(ref LootList);
+        GameObject SpawnedRelic = Instantiate(m_relicPrefab);
+        //Need add the logic that determind what spawned
+        SpawnedRelic.GetComponent<Relic>().SetSpawnData(LootList[0].DropRarity, LootList[0].Relic);
     }
 }

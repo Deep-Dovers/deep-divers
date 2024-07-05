@@ -16766,21 +16766,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 253599798102292219, guid: 40db114a2ba713c41a1a3bb4e1c78263, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3556870547145539019, guid: 40db114a2ba713c41a1a3bb4e1c78263, type: 3}
       propertyPath: m_Name
-      value: AiDummy
+      value: AiTest
       objectReference: {fileID: 0}
     - target: {fileID: 3556870547145539019, guid: 40db114a2ba713c41a1a3bb4e1c78263, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7286491531591867825, guid: 40db114a2ba713c41a1a3bb4e1c78263, type: 3}
+      propertyPath: m_Hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286491531591867825, guid: 40db114a2ba713c41a1a3bb4e1c78263, type: 3}
+      propertyPath: LootList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7286491531591867825, guid: 40db114a2ba713c41a1a3bb4e1c78263, type: 3}
+      propertyPath: LootList.Array.data[0].Relic
+      value: 
+      objectReference: {fileID: 11400000, guid: a1a9943748a45e7458266330749196bf, type: 2}
+    - target: {fileID: 7286491531591867825, guid: 40db114a2ba713c41a1a3bb4e1c78263, type: 3}
+      propertyPath: LootList.Array.data[1].Relic
+      value: 
+      objectReference: {fileID: 11400000, guid: 370fc5fae38761141b6f6c5f75fb11a4, type: 2}
     - target: {fileID: 8152480191532150918, guid: 40db114a2ba713c41a1a3bb4e1c78263, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.402546
+      value: -0.33
       objectReference: {fileID: 0}
     - target: {fileID: 8152480191532150918, guid: 40db114a2ba713c41a1a3bb4e1c78263, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.231825
+      value: -2.72
       objectReference: {fileID: 0}
     - target: {fileID: 8152480191532150918, guid: 40db114a2ba713c41a1a3bb4e1c78263, type: 3}
       propertyPath: m_LocalPosition.z
