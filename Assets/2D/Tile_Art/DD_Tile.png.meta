@@ -1242,6 +1242,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: DD_Tile_54
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa119177ce6674743adbaf7b776bf7bc
+      internalID: -1711091546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -1303,6 +1324,7 @@ TextureImporter:
       DD_Tile_51: 815561337
       DD_Tile_52: -1376407350
       DD_Tile_53: -966200888
+      DD_Tile_54: -1711091546
       DD_Tile_6: -1496858993
       DD_Tile_7: 953036928
       DD_Tile_8: 119869757
