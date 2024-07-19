@@ -43,7 +43,7 @@ public class AbilityList : MonoBehaviour
         m_basicAttackAbilityInst = Equip(m_basicAttackData);
     }
 
-    private void OnDestroy()
+    private void OnDestroy() 
     {
         foreach (var inst in AbilityInstances)
         {

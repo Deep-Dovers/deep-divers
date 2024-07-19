@@ -1,7 +1,7 @@
 using NaughtyAttributes;
 using UnityEngine;
 using Unity.Netcode;
-using UnityEngine.InputSystem;
+using System.Collections;
 
 public class PlayerCharacter : NetworkBehaviour
 {
@@ -63,6 +63,12 @@ public class PlayerCharacter : NetworkBehaviour
     private float castDistance;
     [SerializeField, Tooltip("The layer that the player will perform a ground check when the cast hits")]
     private LayerMask GroundLayer;
+    [SerializeField, Tooltip("The layer that the player can drop down from")]
+    private LayerMask PassThroughGroundLayer;
+    [SerializeField, Tooltip("The player layer")]
+    private LayerMask PlayerLayer;
+    [SerializeField, Tooltip("How long the player ignore passthrough platform")]
+    private float CollisionIgnoreTime;
     [SerializeField, Tooltip("Audio Clip: Jumping SFX")]
     private AudioClip jumpingSFXClip;
 
@@ -198,7 +204,8 @@ public class PlayerCharacter : NetworkBehaviour
     }
     private void CheckGrounded()
     {
-        if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, GroundLayer) && !m_isJumping)
+        if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, GroundLayer) ||
+            Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, PassThroughGroundLayer) && !m_isJumping)
         {
             //! reset jump values
             m_isGrounded = true;
@@ -330,7 +337,15 @@ public class PlayerCharacter : NetworkBehaviour
         {
             if (!m_isJumping && (m_isGrounded || m_jumpCount < m_maxJumpCount || m_coyoteTimeCounter > 0))
             {
-                Jump();
+                //! Check if there is downwards input()
+                if(m_movement.y < 0)
+                {
+                    DropDown();
+                }
+                else
+                {
+                    Jump();
+                }
             }
         }
         else if (!isPressed && m_isJumping)
@@ -348,13 +363,20 @@ public class PlayerCharacter : NetworkBehaviour
 
     public void OnMoveInput(Vector2 value)
     {
-        Debug.Log("moving" + value);
         m_movement = value;
 
         /*if (Mathf.Abs(m_movement.x) > 0f)
         {
             m_animCmp.TransitToAnimationState(PlayerAnimationState.AnimationState.Walk);
         }*/
+    }
+    public void DropDown()
+    {  
+        Debug.Log("Dropping Down");
+        Physics2D.IgnoreLayerCollision(6, 10, true);
+        m_isGrounded = false;
+        m_isJumping = true;
+        StartCoroutine(DropDownCoroutine(CollisionIgnoreTime));
     }
     public void OnDashInput(bool isDashPressed = true)
     {
@@ -366,5 +388,12 @@ public class PlayerCharacter : NetworkBehaviour
     {
         print("My new owner is player index " + owner.PlayerIndex);
         Owner = owner;
+    }
+    private IEnumerator DropDownCoroutine(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        print("Coroutine ended: can collide again");
+        Physics2D.IgnoreLayerCollision(6, 10, false);
+
     }
 }

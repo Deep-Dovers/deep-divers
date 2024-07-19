@@ -51,10 +51,10 @@ public class BaseEnemyBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_curHP = m_Hp; 
-        m_seeker = GetComponent<Seeker>();
-        m_rigidbody = GetComponent<Rigidbody2D>();
-        m_seeker.StartPath(m_rigidbody.position, m_patrolPath[0].position);
+        //m_curHP = m_Hp; 
+        //m_seeker = GetComponent<Seeker>();
+        //m_rigidbody = GetComponent<Rigidbody2D>();
+        //m_seeker.StartPath(m_rigidbody.position, m_patrolPath[0].position);
     }
     void OnPathComplete(Path p)
     {
