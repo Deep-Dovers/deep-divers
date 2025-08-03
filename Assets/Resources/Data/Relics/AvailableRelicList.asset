@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 263a3beea12a6d84bbc62a0850565c56, type: 3}
+  m_Name: AvailableRelicList
+  m_EditorClassIdentifier: 
+  LootGamePrefab: {fileID: 4846024854945159076, guid: 70ee678e6f2ae9445a35065e7e891a74, type: 3}
+  LootDisplayUI: {fileID: 0}
+  LootTable:
+  - Relic: {fileID: 11400000, guid: a1a9943748a45e7458266330749196bf, type: 2}
+    AppearanceRate: 100
+    RarityToSpawnRate:
+    - Rarity: 1
+      Spawn:
+        DropRate: 0
+        SpawnCondition: 2
+    - Rarity: 4
+      Spawn:
+        DropRate: 18
+        SpawnCondition: 2
+    - Rarity: 5
+      Spawn:
+        DropRate: 3
+        SpawnCondition: 2
+  - Relic: {fileID: 11400000, guid: 370fc5fae38761141b6f6c5f75fb11a4, type: 2}
+    AppearanceRate: 50
+    RarityToSpawnRate:
+    - Rarity: 4
+      Spawn:
+        DropRate: 15
+        SpawnCondition: 2
+    - Rarity: 5
+      Spawn:
+        DropRate: 2
+        SpawnCondition: 2
+  - Relic: {fileID: 11400000, guid: e680a56b84b12384fb27bdf567fbf92d, type: 2}
+    AppearanceRate: 30
+    RarityToSpawnRate:
+    - Rarity: 0
+      Spawn:
+        DropRate: 90
+        SpawnCondition: 2
+    - Rarity: 1
+      Spawn:
+        DropRate: 50
+        SpawnCondition: 2
+    - Rarity: 4
+      Spawn:
+        DropRate: 20
+        SpawnCondition: 2
+    - Rarity: 5
+      Spawn:
+        DropRate: 3.5
+        SpawnCondition: 2

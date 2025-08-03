@@ -3,19 +3,22 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Relic
+  - FX
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - FX
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - Relic
+  - Ground
+  - PassThroughGround
   - 
   - 
   - 
@@ -38,6 +41,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3910235183
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Relic
+    uniqueID: 1451242497
+    locked: 0
+  - name: UI
+    uniqueID: 3576162555
+    locked: 0
+  - name: Enemy
+    uniqueID: 3615141125
     locked: 0
