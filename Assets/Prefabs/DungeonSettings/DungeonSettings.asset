@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6074963956c3dfc468542b9e8b57c7f4, type: 3}
+  m_Name: DungeonSettings
+  m_EditorClassIdentifier: 
+  m_GridWidth: 20
+  m_GridHeight: 20
+  m_MinRooms: 7
+  m_MaxRooms: 12
+  m_MinDungeonLength: 3
+  m_BranchChanceSecond: 0.5
+  m_BranchChanceThird: 0.25
+  m_BranchChanceFourth: 0.1
