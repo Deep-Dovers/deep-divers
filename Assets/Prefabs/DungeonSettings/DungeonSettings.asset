@@ -20,3 +20,8 @@ MonoBehaviour:
   m_BranchChanceSecond: 0.5
   m_BranchChanceThird: 0.25
   m_BranchChanceFourth: 0.1
+  m_RoomTileWidth: 20
+  m_RoomTileHeight: 20
+  m_Origin: {x: 0, y: 0, z: 0}
+  m_YHeight: 0
+  m_TileWorldSize: 1
